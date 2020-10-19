@@ -55,7 +55,7 @@ function App() {
         <Content style={{padding: '0 24px', minHeight: 280}}>Content</Content>
     </Layout>
     </Content>
-    <Footer style={{textAlign: 'center'}}>©2020 Universidad Nacional de Costa Rica<br/>www.mikeguzman.info</Footer>
+    <Footer style={{textAlign: 'center'}}>©2020 Universidad Nacional de Costa Rica<br/>Alpha</Footer>
     </Layout>
     );
 }
