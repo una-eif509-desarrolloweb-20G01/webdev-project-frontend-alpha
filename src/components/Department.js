@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useState, useEffect} from "react";
 import {Alert, Table} from 'antd';
 
 import DepartmentService from "../services/department.service";
@@ -51,26 +51,12 @@ const Department = (props) => {
     ];
 
     return (
-        < div >
-        < Table
-    rowKey = {department
-=>
-    departmentList.id_department
-}
-    columns = {columns}
-    dataSource = {departmentList}
-    />
-    {
-        error ? (
-            < Alert message = "Error in the system. Try again later."
-        type = "error"
-        showIcon
-        closable / >
-    ) :
-        null
-    }
-<
-    /div>
+        <div>
+        <Table rowKey={department => departmentList.id_department} columns={columns} dataSource={departmentList}/>
+    {error ? (
+        <Alert message="Error in the system. Try again later." type="error" showIcon closable/>
+    ) : null}
+</div>
 )
 };
 
