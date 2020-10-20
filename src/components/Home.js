@@ -14,9 +14,9 @@ const Home = (props) => {
 
     return (
         <div>
-        HOME
+            Project FronEnd Alpha
         </div>
-)
-};
+        )
+    };
 
 export default Home;

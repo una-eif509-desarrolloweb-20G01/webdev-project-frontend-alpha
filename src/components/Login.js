@@ -76,21 +76,21 @@ const Login = (props) => {
                     },
                 ]}
             >
-        <Input
-            name="username"
-            prefix={<UserOutlined className="site-form-item-icon"/>}
-            onChange={handleInputChange}
-            placeholder="User Name"
-        />
-                </Form.Item>
-                <Form.Item
-                    name="password"
-                    label="Password"
-                    rules={[
-                     {
-                        required: true,
-                     },
-                ]}
+                <Input
+                    name="username"
+                    prefix={<UserOutlined className="site-form-item-icon"/>}
+                    onChange={handleInputChange}
+                    placeholder="User Name"
+                />
+            </Form.Item>
+            <Form.Item
+                name="password"
+                label="Password"
+                rules={[
+                 {
+                    required: true,
+                 },
+            ]}
         >
         <Input.Password
             name="password"
