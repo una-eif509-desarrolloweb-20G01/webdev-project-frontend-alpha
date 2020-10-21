@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import {Form, Alert, Input, Button} from 'antd';
 import {EyeInvisibleOutlined, EyeTwoTone, UserOutlined} from '@ant-design/icons';
 

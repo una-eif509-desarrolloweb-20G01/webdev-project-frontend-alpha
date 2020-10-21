@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from "react";
-import {Alert, Table} from 'antd';
+import {Alert, Button, Table} from 'antd';
 
 import DepartmentService from "../services/department.service";
+import {Link} from "react-router-dom";
+import Login from "./Login";
 
 const initialDepartmentListState = [
     {
@@ -45,13 +47,18 @@ const Department = (props) => {
     /** General Methods **/
     const columns = [
         {
-            title: 'Department',
+            title: 'List of Departments',
             render: (department) => department.department_name
         }
     ];
 
     return (
         <div>
+            <Link to={"/add_department"}>
+                <Button type="primary" htmlType="button">
+                    Add
+                </Button>
+            </Link>
             <Table rowKey={department => departmentList.id_department} columns={columns} dataSource={departmentList}/>
             {error ? (
                 <Alert message="Error in the system. Try again later." type="error" showIcon closable/>

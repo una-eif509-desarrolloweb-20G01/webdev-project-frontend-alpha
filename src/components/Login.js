@@ -103,6 +103,9 @@ const Login = (props) => {
                 <Button type="primary" htmlType="submit">
                     Login
                 </Button>
+                <Button htmlType="button" onClick={onReset}>
+                Reset
+                </Button>
             </Form.Item>
                 </Form>
             {error ? (
