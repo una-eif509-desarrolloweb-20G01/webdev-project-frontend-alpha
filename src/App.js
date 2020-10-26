@@ -12,7 +12,7 @@ import TimeSheet from "./components/TimeSheet";
 import AddDepartment from "./components/AddDepartment";
 import EditDepartment from "./components/EditDepartment";
 import Signup from "./components/Signup";
-
+import User from "./components/User";
 function App() {
     const {Header, Content, Footer} = Layout;
     const [currentUser, setCurrentUser] = useState(undefined);
@@ -75,6 +75,7 @@ function App() {
             <Route exact path="/timesheet" component={TimeSheet}/>
             <Route exact path="/add_department" component={AddDepartment}/>
             <Route exact path="/edit_department/:id" component={EditDepartment}/>
+            <Route exact path="/user" component={User}/>
             <Route exact path="/signup" component={Signup}/>
     </Switch>
     </div>
