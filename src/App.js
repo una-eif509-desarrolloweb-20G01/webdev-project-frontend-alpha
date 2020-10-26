@@ -44,12 +44,23 @@ function App() {
         Sign up
     </Link>
     </Menu.Item>
+
     <Menu.Item key="2">
         <a href="/login" className="nav-link" onClick={logOut}>
         LogOut
         </a>
         </Menu.Item>
+     
+        <Menu.Item key="2">
+        <a href="/Department" className="nav-link"  >
+        Department
+        </a>
+        </Menu.Item>
+     
+    
         </Menu>
+
+
         </Header>
         <Content style={{padding: '0 50px'}}>
 <Breadcrumb style={{margin: '16px 0'}}>

@@ -37,7 +37,9 @@ const Login = (props) => {
                 console.log(login);
                 setLogin(response.data);
                 form.resetFields();
-                props.history.push("/department");
+            //Evitar que lo mande a deparment por default
+              //  props.history.push("/department");
+              props.history.push("/");
                 window.location.reload();
             })
             .catch(err => {
