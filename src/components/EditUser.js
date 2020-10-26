@@ -65,8 +65,17 @@ const EditDepartment = props => {
             <label htmlFor="user_email">Email: </label>
             <input type="text" className="form-control" id="user_email" name="user_email" value={currentUser.email} onChange={handleInputChange} />
 
-            <label htmlFor="user_name">Name: </label>
-            <input type="text" className="form-control" id="user_name" name="user_name" value={currentUser.name} onChange={handleInputChange} />
+            <label htmlFor="first_name">Name: </label>
+            <input type="text" className="form-control" id="first_name" name="first_name" value={currentUser.firstname} onChange={handleInputChange} />
+    
+            <label htmlFor="last_name">Last name: </label>
+            <input type="text" className="form-control" id="last_name" name="last_name" value={currentUser.lastname} onChange={handleInputChange} />
+    
+
+            <label htmlFor="username">Username: </label>
+            <input type="text" className="form-control" id="username" name="username" value={currentUser.username} onChange={handleInputChange} />
+    
+
     </div>
 
 

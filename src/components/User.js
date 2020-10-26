@@ -104,7 +104,6 @@ const User = (props) => {
                 <label><strong>Email:</strong></label>{" "}{currentUser.email}
                 
                 <label><strong>First Name:</strong></label>{" "}{currentUser.firstname}
-
                 
                 <label><strong>Last Name:</strong></label>{" "}{currentUser.lastname}
                     
