@@ -8,6 +8,7 @@ import AuthService from "./services/auth.service";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import Department from "./components/Department";
+import TimeSheet from "./components/TimeSheet";
 import AddDepartment from "./components/AddDepartment";
 import EditDepartment from "./components/EditDepartment";
 import Signup from "./components/Signup";
@@ -71,6 +72,7 @@ function App() {
             <Route exact path={["/", "/home"]} component={Home}/>
             <Route exact path="/login" component={Login}/>
             <Route exact path="/department" component={Department}/>
+            <Route exact path="/timesheet" component={TimeSheet}/>
             <Route exact path="/add_department" component={AddDepartment}/>
             <Route exact path="/edit_department/:id" component={EditDepartment}/>
             <Route exact path="/signup" component={Signup}/>
