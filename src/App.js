@@ -13,6 +13,7 @@ import AddDepartment from "./components/AddDepartment";
 import EditDepartment from "./components/EditDepartment";
 import Signup from "./components/Signup";
 import User from "./components/User";
+import EditUser from "./components/EditUser";
 function App() {
     const {Header, Content, Footer} = Layout;
     const [currentUser, setCurrentUser] = useState(undefined);
@@ -81,6 +82,7 @@ function App() {
             <Route exact path="/add_department" component={AddDepartment}/>
             <Route exact path="/edit_department/:id" component={EditDepartment}/>
             <Route exact path="/user" component={User}/>
+            <Route exact path="/edit_user/:id" component={EditUser}/>
             <Route exact path="/signup" component={Signup}/>
     </Switch>
     </div>

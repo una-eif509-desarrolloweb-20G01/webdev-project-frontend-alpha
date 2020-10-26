@@ -8,7 +8,10 @@ import Login from "./Login";
 const initialUserListState = [
     {
         "id_user": 0,
-        "email": ""
+        "email": "",
+        "firstname" : "",
+        "lastname": "",
+         "username": ""
     }
 ];
 
@@ -67,17 +70,7 @@ const User = (props) => {
     };
 
     return (
-     /*   <div>
-            <Link to={"/add_department"}>
-                <Button type="primary" htmlType="button">
-                    Add
-                </Button>
-            </Link>
-            <Table rowKey={department => userList.id_department} columns={columns} dataSource={userList}/>
-            {error ? (
-                <Alert message="Error in the system. Try again later." type="error" showIcon closable/>
-            ) : null}
-        </div>*/
+    
 
         <div className="list row">
 
@@ -106,19 +99,18 @@ const User = (props) => {
     <div className="col-md-6">
         {currentUser ? (
                 <div>
-                <h4>ID</h4>
+                <h4>User Details</h4>
                 <div>
-                <label>
-                <strong>Email:</strong>
-        </label>{" "}
-    {currentUser.id_user}
+                <label><strong>Email:</strong></label>{" "}{currentUser.email}
+                
+                <label><strong>First Name:</strong></label>{" "}{currentUser.firstname}
+
+                
+                <label><strong>Last Name:</strong></label>{" "}{currentUser.lastname}
+                    
+                <label><strong>Username:</strong></label>{" "}{currentUser.username}
 </div>
-    <div>
-    <label>
-    <strong>Description:</strong>
-    </label>{" "}
-    {currentUser.email}
-</div>
+
 
 
     <Link
