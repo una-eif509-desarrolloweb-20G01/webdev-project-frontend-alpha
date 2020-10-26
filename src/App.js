@@ -51,13 +51,18 @@ function App() {
         </a>
         </Menu.Item>
      
-        <Menu.Item key="2">
+        <Menu.Item key="3">
         <a href="/Department" className="nav-link"  >
         Department
         </a>
         </Menu.Item>
      
-    
+        <Menu.Item key="4">
+        <a href="/User" className="nav-link"  >
+        User
+        </a>
+        </Menu.Item>
+     
         </Menu>
 
 
