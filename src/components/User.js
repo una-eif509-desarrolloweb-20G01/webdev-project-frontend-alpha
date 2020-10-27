@@ -41,10 +41,10 @@ const User = (props) => {
             .catch(err => {
                 console.log(err);
                 setError(err)
-              /*  if (err.response.status === 401) {
+                if (err.response.status === 401) {
                     props.history.push("/login");
                     window.location.reload();
-                }*/
+                }
             });
     }
 

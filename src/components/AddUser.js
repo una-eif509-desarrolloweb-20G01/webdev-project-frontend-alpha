@@ -32,19 +32,14 @@ const AddUser = (props) => {
     const [user, setUser] = useState(initialUserState);
     const [error, setError, submitted, setSubmitted] = useState(false);
 
-    /*
-    const [departmentList, setUserList] = useState(initialDepartmentListState);
-    const [error, setError] = useState(false);
-     */
+ 
 
     const handleInputChange = event => {
         let { name, value } = event.target;
         setUser({ ...user, [name]: value });
     };
 
-   /* useEffect(() => {
-        saveDepartment();
-    },);*/
+
 
     const saveUser = () => {
         var data = {
@@ -113,7 +108,7 @@ const AddUser = (props) => {
                     />
                 </Form.Item>
                 <Form.Item
-                    name="first_name"
+                    name="firstname"
                     label="Name"
                     rules={[
                         {
@@ -122,15 +117,15 @@ const AddUser = (props) => {
                     ]}
                 >
                     <Input
-                        name="first_name"
+                        name="firstname"
                         onChange={handleInputChange}
                         placeholder="Name"
                      />
                  </Form.Item>
 
                  <Form.Item
-                    name="last_name"
-                    label="last_name"
+                    name="lastname"
+                    label="lastname"
                     rules={[
                         {
                             required: true,
@@ -138,7 +133,7 @@ const AddUser = (props) => {
                     ]}
                 >
                     <Input
-                        name="last_name"
+                        name="lastname"
                         onChange={handleInputChange}
                         placeholder="last name"
                      />
