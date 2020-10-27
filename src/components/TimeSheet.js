@@ -61,8 +61,65 @@ const TimeSheet = (props) => {
     /** General Methods **/
     const columns = [
         {
-            title: 'List of TimeSheets',
+            title: 'ID',
+            render: (timesheet) => timesheet.id_time
+        },
+        {
+            title: 'Date',
             render: (timesheet) => timesheet.timesheet_date
+        },
+        {
+            title: 'Mo',
+            render: (timesheet) => timesheet.monday
+        },
+        {
+            title: 'Tu',
+            render: (timesheet) => timesheet.tuesday
+        },
+        {
+            title: 'We',
+            render: (timesheet) => timesheet.wednesday
+        },
+        {
+            title: 'Th',
+            render: (timesheet) => timesheet.thursday
+        },
+        {
+            title: 'Fr',
+            render: (timesheet) => timesheet.friday
+        },
+        {
+            title: 'Sa',
+            render: (timesheet) => timesheet.saturday
+        },
+        {
+            title: 'Su',
+            render: (timesheet) => timesheet.sunday
+        },
+        {
+            title: 'Pay',
+            render: (timesheet) => timesheet.pay
+        },
+        {
+            title: 'User',
+            render: (timesheet) => timesheet.id_user
+        },
+        {
+            title: 'Approved',
+            render: (timesheet) => timesheet.approved
+        },
+        {
+            title: 'Payed',
+            render: (timesheet) => timesheet.payed
+        },
+        {
+            title: 'Department',
+            render: (timesheet) => timesheet.id_department
+        },
+        {
+            title: 'Editar',
+            render:  (timesheet) => <a href={"/edit_timesheet/"+timesheet.id_time}>Editar</a>,
+
         }
     ];
 
