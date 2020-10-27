@@ -1,16 +1,33 @@
 import React, { useState, useEffect } from "react";
 import UserService from "../services/user.service";
-
-const EditDepartment = props => {
-    const initialDepartmentState = {
-        id_department: null,
-        department_name: ""
+import {Form, Input, Button, Alert} from 'antd';
+const EditUser = props => {
+    const initialUserState = {
+        id_user: null,
+        firstname: ""
     };
-    const [currentUser, setcurrentUser] = useState(initialDepartmentState);
+    const [currentUser, setcurrentUser] = useState(initialUserState);
     const [message, setMessage] = useState("");
-
+  
     const [error, setError, submitted, setSubmitted] = useState(false);
 
+    const [requiredMark, setRequiredMarkType] = useState('optional');
+
+    const layout = {
+        labelCol: {
+            span: 2,
+        },
+        wrapperCol: {
+            span: 3,
+        },
+    };
+    
+    const tailLayout = {
+        wrapperCol: {
+            offset: 2,
+            span: 8,
+        },
+    };
     const getUser = id => {
         UserService.get(id)
             .then(response => {
@@ -21,7 +38,7 @@ const EditDepartment = props => {
                 console.log(e);
             });
     };
-
+    const [form] = Form.useForm();
     useEffect(() => {
         getUser(props.match.params.id);
     }, [props.match.params.id]);
@@ -32,6 +49,9 @@ const EditDepartment = props => {
     };
 
 
+    const onReset = () => {
+        form.resetFields();
+    };
 
     const updateUser = () => {
         UserService.update(currentUser.id_user, currentUser)
@@ -58,43 +78,86 @@ const EditDepartment = props => {
     return (
         <div>
         {currentUser ? (
-                <div className="edit-form">
+                <div>
                 <h4>User</h4>
-                <form>
-                <div className="form-group">
-            <label htmlFor="user_email">Email: </label>
+                <label htmlFor="user_email">Email: </label>
             <input type="text" className="form-control" id="user_email" name="user_email" value={currentUser.email} onChange={handleInputChange} />
 
-            <label htmlFor="first_name">Name: </label>
-            <input type="text" className="form-control" id="first_name" name="first_name" value={currentUser.firstname} onChange={handleInputChange} />
-    
-            <label htmlFor="last_name">Last name: </label>
-            <input type="text" className="form-control" id="last_name" name="last_name" value={currentUser.lastname} onChange={handleInputChange} />
-    
-
-            <label htmlFor="username">Username: </label>
-            <input type="text" className="form-control" id="username" name="username" value={currentUser.username} onChange={handleInputChange} />
-    
-
-    </div>
-
+                <Form {...layout} form={form} name="control-hooks" >
+                <Form.Item
+                    name="id_user"
+                    label="ID">
+                    <Input
+                        type="text"
+                        onChange={handleInputChange}
+                        placeholder="ID"
+                        value="algo"
+                        />
+                </Form.Item>
 
 
-    </form>
+                <Form.Item
+                    name="firstname"
+                    label="Name"
+                    rules={[
+                        {
+                            required: true,
+                        },
+                    ]}
+                >
+                    <Input
+                        name="firstname"
+                        onChange={handleInputChange}
+                        placeholder="Name"
+                     />
+                 </Form.Item>
+
+                 <Form.Item
+                    name="lastname"
+                    label="lastname"
+                    rules={[
+                        {
+                            required: true,
+                        },
+                    ]}
+                >
+                    <Input
+                        name="lastname"
+                        onChange={handleInputChange}
+                        placeholder="last name"
+                        value={currentUser.lastname}
+                     />
+                 </Form.Item>
+
+                 <Form.Item
+                    name="User name"
+                    label="username"
+                    rules={[
+                        {
+                            required: true,
+                        },
+                    ]}
+                >
+                    <Input
+                        name="username"
+                        onChange={handleInputChange}
+                        placeholder="User Name"
+                     />
+                 </Form.Item>
+
+                 <Form.Item {...tailLayout}>
+                    <Button type="primary" htmlType="submit" onClick={updateUser}>
+                        Update
+                    </Button>
+                    <Button htmlType="button" onClick={onReset}>
+                        Reset
+                    </Button>
+                </Form.Item>
+             
+                 </Form>
 
 
-<button className="badge badge-danger mr-2" onClick={deleteUser}>
-        Delete
-        </button>
 
-        <button
-    type="submit"
-    className="badge badge-success"
-    onClick={updateUser}
-        >
-        Update
-        </button>
-        <p>{message}</p>
         </div>
 ) : (
     <div>
@@ -106,4 +169,4 @@ const EditDepartment = props => {
     );
 };
 
-export default EditDepartment;
+export default EditUser;

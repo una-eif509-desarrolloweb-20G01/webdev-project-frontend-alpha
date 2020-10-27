@@ -19,7 +19,7 @@ function App() {
 
     
     const {Header, Content, Footer} = Layout;
-    
+
 
     const [currentUser, setCurrentUser] = useState(undefined);
     const { SubMenu } = Menu;
@@ -48,27 +48,27 @@ function App() {
                     Login
                     </Link>
                 </Menu.Item>
-                <Menu.Item key="1">
+                <Menu.Item key="2">
                     <Link to={"/signup"}>
                     Sign up
                     </Link>
                 </Menu.Item>
-                <Menu.Item key="2">
+                <Menu.Item key="3">
                     <a href="/login" className="nav-link" onClick={logOut}>
                     LogOut
                     </a>
                 </Menu.Item>
-                <Menu.Item key="3">
+                <Menu.Item key="4">
                     <a href="/Department" className="nav-link"  >
                     Department
                     </a>
                 </Menu.Item>
-                <Menu.Item key="4">
+                <Menu.Item key="5">
                     <a href="/User" className="nav-link"  >
                     User
                     </a>
                 </Menu.Item>
-                <Menu.Item key="4">
+                <Menu.Item key="6">
                     <a href="/TimeSheet" className="nav-link"  >
                         TimeSheet
                     </a>
