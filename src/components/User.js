@@ -96,7 +96,11 @@ const User = (props) => {
         <div className="list row">
 
         <div className="col-md-6">
-        <h4>User List</h4>
+        <h4>User List</h4>        <Link to={"/add_user"}>
+        <Button type="primary" htmlType="button">
+        Add
+        </Button>
+        </Link>
     <Table rowKey={user => userList.id_user } columns={columns} dataSource={userList} size="small" 
         
     />
