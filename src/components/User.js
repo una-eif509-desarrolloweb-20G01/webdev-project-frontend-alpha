@@ -53,6 +53,9 @@ const User = (props) => {
     /** General Methods **/
     const columns = [
         {
+            title: 'User ID',
+            render: (user) => user.id_user
+        },{
             title: 'Email',
             render: (user) => user.email,
             
@@ -68,6 +71,11 @@ const User = (props) => {
         {
             title: 'Username',
             render: (user) => user.username
+        },
+        {
+            title: 'Editar',
+            render:  (user) => <a href={"/edit_user/"+user.id_user}>Editar</a>,
+     
         }
     ];
 
