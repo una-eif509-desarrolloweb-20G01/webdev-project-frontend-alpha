@@ -82,10 +82,13 @@ const Department = (props) => {
         <div className="list row">
 
         <div className="col-md-6">
+        <Link to={"/add_department"}>
+        <Button type="primary" htmlType="button">
+        Add
+        </Button>
+        </Link>
         <h4>Departments List</h4>
-    <Table rowKey={department => departmentList.id_department} columns={columns} dataSource={departmentList}
-
-    />
+    {/* <Table rowKey={department => departmentList.id_department} columns={columns} dataSource={departmentList}/> */}
     <ul className="list-group">
         {departmentList &&
         departmentList.map((departmentList, index) => (
@@ -106,16 +109,16 @@ const Department = (props) => {
     <div className="col-md-6">
         {currentDepartment ? (
                 <div>
-                <h4>Tutorial</h4>
+                <h4>Department</h4>
                 <div>
                 <label>
-                <strong>Title:</strong>
+                <strong>Id:</strong>
         </label>{" "}
     {currentDepartment.id_department}
 </div>
     <div>
     <label>
-    <strong>Description:</strong>
+    <strong>Name:</strong>
     </label>{" "}
     {currentDepartment.department_name}
 </div>

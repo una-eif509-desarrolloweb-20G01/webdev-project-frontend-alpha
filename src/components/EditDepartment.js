@@ -3,7 +3,7 @@ import DepartmentService from "../services/department.service";
 
 const EditDepartment = props => {
     const initialDepartmentState = {
-        id_department: null,
+        id_department: 0,
         department_name: ""
     };
     const [currentDepartment, setCurrentDepartment] = useState(initialDepartmentState);

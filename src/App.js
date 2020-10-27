@@ -18,6 +18,7 @@ function App() {
     const {Header, Content, Footer} = Layout;
     const [currentUser, setCurrentUser] = useState(undefined);
 
+
     useEffect(() => {
         const user = AuthService.getCurrentUser();
 
