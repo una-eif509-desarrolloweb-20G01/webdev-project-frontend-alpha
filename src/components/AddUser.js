@@ -92,6 +92,7 @@ const AddUser = (props) => {
         </Link>
         <h1>Add User</h1>
             <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
+ 
                 <Form.Item
                     name="id_user"
                     label="ID"
@@ -161,6 +162,7 @@ const AddUser = (props) => {
                     rules={[
                         {
                             required: true,
+                            
                         },
                     ]}
                 >
@@ -195,6 +197,7 @@ const AddUser = (props) => {
                         Reset
                     </Button>
                 </Form.Item>
+             
             </Form>
                 {submitted  ? (
                     <Alert message="User Saved" type="success" showIcon closable />
