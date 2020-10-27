@@ -53,8 +53,21 @@ const User = (props) => {
     /** General Methods **/
     const columns = [
         {
-            title: 'List of Users',
-            render: (user) => user.email
+            title: 'Email',
+            render: (user) => user.email,
+            
+        },
+        {
+            title: 'First Name',
+            render: (user) => user.firstname
+        },
+        {
+            title: 'Last Name',
+            render: (user) => user.lastname
+        },
+        {
+            title: 'Username',
+            render: (user) => user.username
         }
     ];
 
@@ -76,8 +89,8 @@ const User = (props) => {
 
         <div className="col-md-6">
         <h4>User List</h4>
-    <Table rowKey={user => userList.id_user} columns={columns} dataSource={userList}
-
+    <Table rowKey={user => userList.id_user } columns={columns} dataSource={userList} size="small" 
+        
     />
     <ul className="list-group">
         {userList &&
