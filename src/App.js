@@ -36,40 +36,39 @@ function App() {
         <Router>
         <Layout className="layout">
         <Header>
-        <div className="logo"/>
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-        <Menu.Item key="1">
-        <Link to={"/login"}>
-        Login
-        </Link>
-        </Menu.Item>
-        <Menu.Item key="1">
-        <Link to={"/signup"}>
-        Sign up
-    </Link>
-    </Menu.Item>
-
-    <Menu.Item key="2">
-        <a href="/login" className="nav-link" onClick={logOut}>
-        LogOut
-        </a>
-        </Menu.Item>
-     
-        <Menu.Item key="3">
-        <a href="/Department" className="nav-link"  >
-        Department
-        </a>
-        </Menu.Item>
-     
-        <Menu.Item key="4">
-        <a href="/User" className="nav-link"  >
-        User
-        </a>
-        </Menu.Item>
-     
-        </Menu>
-
-
+            <div className="logo"/>
+            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+                <Menu.Item key="1">
+                    <Link to={"/login"}>
+                    Login
+                    </Link>
+                </Menu.Item>
+                <Menu.Item key="1">
+                    <Link to={"/signup"}>
+                    Sign up
+                    </Link>
+                </Menu.Item>
+                <Menu.Item key="2">
+                    <a href="/login" className="nav-link" onClick={logOut}>
+                    LogOut
+                    </a>
+                </Menu.Item>
+                <Menu.Item key="3">
+                    <a href="/Department" className="nav-link"  >
+                    Department
+                    </a>
+                </Menu.Item>
+                <Menu.Item key="4">
+                    <a href="/User" className="nav-link"  >
+                    User
+                    </a>
+                </Menu.Item>
+                <Menu.Item key="4">
+                    <a href="/TimeSheet" className="nav-link"  >
+                        TimeSheet
+                    </a>
+                </Menu.Item>
+            </Menu>
         </Header>
         <Content style={{padding: '0 50px'}}>
 <Breadcrumb style={{margin: '16px 0'}}>
