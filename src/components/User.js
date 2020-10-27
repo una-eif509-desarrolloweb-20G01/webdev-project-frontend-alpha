@@ -96,57 +96,17 @@ const User = (props) => {
         <div className="list row">
 
         <div className="col-md-6">
-        <h4>User List</h4>
+        <h4>User List</h4>        <Link to={"/add_user"}>
+        <Button type="primary" htmlType="button">
+        Add
+        </Button>
+        </Link>
     <Table rowKey={user => userList.id_user } columns={columns} dataSource={userList} size="small" 
         
     />
-    <ul className="list-group">
-        {userList &&
-        userList.map((userList, index) => (
-            <li
-    className={
-        "list-group-item " + (index === currentIndex ? "active" : "")
-    }
-    onClick={() => setActiveUser(userList , index)}
-    key={index}
-        >
-        {userList.email}
-        </li>
-))}
-</ul>
-
-
+   
     </div>
-    <div className="col-md-6">
-        {currentUser ? (
-                <div>
-                <h4>User Details</h4>
-                <div>
-                <label><strong>Email:</strong></label>{" "}{currentUser.email}
-                
-                <label><strong>First Name:</strong></label>{" "}{currentUser.firstname}
-                
-                <label><strong>Last Name:</strong></label>{" "}{currentUser.lastname}
-                    
-                <label><strong>Username:</strong></label>{" "}{currentUser.username}
-</div>
 
-
-
-    <Link
-    to={"/edit_user/" + currentUser.id_user}
-    className="badge badge-warning"
-        >
-        Edit
-        </Link>
-        </div>
-) : (
-    <div>
-    <br />
-    <p>Please click on a User...</p>
-    </div>
-)}
-</div>
     </div>
     )
 };
