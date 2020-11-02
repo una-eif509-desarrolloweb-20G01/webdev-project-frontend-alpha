@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from "react";
-import {Alert, Button, Table} from 'antd';
+import {Alert, Button, Table,Space,Modal} from 'antd';
 
 import UserService from "../services/user.service";
 import {Link} from "react-router-dom";
 import Login from "./Login";
+
+
 
 const initialUserListState = [
     {
@@ -16,6 +18,7 @@ const initialUserListState = [
 ];
 
 const User = (props) => {
+ 
     const [userList, setUserList] = useState(initialUserListState);
     const [error, setError] = useState(false);
 
@@ -29,7 +32,9 @@ const User = (props) => {
 
     useEffect(() => {
         getAllUserMethod();
-    },);
+    },[]);
+
+
 
     /** Service methods **/
     const getAllUserMethod = () => {
@@ -47,10 +52,23 @@ const User = (props) => {
                 }
             });
     }
+    /** Handle actions in the Table **/
+    const deleteUser = () => {
+        UserService.remove(currentUser.id_user)
+            .then(response => {
+                console.log(response.data);
 
-    /** Handle actions in the Form **/
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    };
 
-    /** General Methods **/
+    const [state, setModal] = useState(false);
+   
+
+ 
+/** End handle actions in the table */
     const columns = [
         {
             title: 'User ID',
@@ -73,12 +91,38 @@ const User = (props) => {
             render: (user) => user.username
         },
         {
-            title: 'Editar',
-            render:  (user) => <a href={"/edit_user/"+user.id_user}>Editar</a>,
+            title: 'Edit',
+            render:  (user) => <a href={"/edit_user/"+user.id_user}>Edit</a>,
+     
+        },
+        {
+            title: 'Delete',
+            render:  (user) => (
+                //modal window confirm user removal
+                <Space size="middle">
+                    <Button type="primary" onClick={() => this.setModal1Visible(true)}>
+          Display a modal dialog at 20px to Top
+        </Button>
+        <Modal
+          title="20px to Top"
+          style={{ top: 20 }}
+          visible={this.state.modal1Visible}
+          onOk={() => this.setModal1Visible(false)}
+          onCancel={() => this.setModal1Visible(false)}
+        >
+          <p>some contents...</p>
+          <p>some contents...</p>
+          <p>some contents...</p>
+        </Modal>
+
+                </Space>
+              ),
      
         }
     ];
+     /** Handle actions in the Form **/
 
+    /** General Methods **/
     const refreshList = () => {
         getAllUserMethod();
         setCurrentUser(null);
@@ -108,6 +152,8 @@ const User = (props) => {
     </div>
 
     </div>
+
+    
     )
 };
 

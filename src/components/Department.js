@@ -26,7 +26,7 @@ const Department = (props) => {
 
     useEffect(() => {
         getAllDepartmentsMethod();
-    },);
+    },[]);
 
     /** Service methods **/
     const getAllDepartmentsMethod = () => {
@@ -34,6 +34,7 @@ const Department = (props) => {
             .then(response => {
                 setDepartmentList(response.data);
                 console.log(response.data);
+         
             })
             .catch(err => {
                 console.log(err);
