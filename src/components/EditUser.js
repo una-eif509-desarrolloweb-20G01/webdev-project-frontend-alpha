@@ -24,7 +24,7 @@ const EditUser = props => {
     const [departmentList, setDepartmentList] = useState(initialDepartmentListState);
     // const { Option } = Select;
     const [currentUser, setcurrentUser] = useState(initialUserState);
-    
+
     const [viewMode, setViewMode] = useState(true)
     const [pending, setPending] = useState(false)
     const handleFinish = useCallback(values => {
@@ -104,7 +104,6 @@ const EditUser = props => {
             disabled: pending,
             initialValues: currentUser,
             fields: [
-                 // { name: ['name', 'first'], label: 'First Name', required: true },
                 { key: 'id_user', label: 'ID', required: true },
                 { key: 'email', label: 'Email', required: true },
                 { key: 'firstname', label: 'First Name', required: true },
