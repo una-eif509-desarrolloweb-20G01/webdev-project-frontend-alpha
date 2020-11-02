@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import UserService from "../services/user.service";
+import {Form, Input, Button, Alert, Modal} from 'antd';
+import FormBuilder from "antd-form-builder";
 import {Form, Input, Button, Alert,Select} from 'antd';
-
 import DepartmentService from "../services/department.service";
+
 const EditUser = props => {
     const initialUserState = {
         id_user: null,
         email: "",
+        firstname : "",
+        lastname: "",
+        username: ""
         firstname: "",
         lastname: ""
+
     };
     const initialDepartmentListState = [
         {
@@ -22,8 +28,23 @@ const EditUser = props => {
     const [departmentList, setDepartmentList] = useState(initialDepartmentListState);
     const { Option } = Select;
     const [currentUser, setcurrentUser] = useState(initialUserState);
+    const [viewMode, setViewMode] = useState(true)
+    const [pending, setPending] = useState(false)
+    const handleFinish = useCallback(values => {
+        console.log('Submit: ', values)
+        setPending(true)
+        setTimeout(() => {
+            setPending(false)
+            setcurrentUser(values)
+            setViewMode(true)
+            Modal.success({
+                title: 'Success',
+                content: 'Infomation updated.',
+            })
+        }, 1500)
+    })
     const [message, setMessage] = useState("");
-  
+
     const [error, setError, submitted, setSubmitted] = useState(false);
 
     const [requiredMark, setRequiredMarkType] = useState('optional');
@@ -36,7 +57,7 @@ const EditUser = props => {
             span: 3,
         },
     };
-    
+
     const tailLayout = {
         wrapperCol: {
             offset: 2,
@@ -82,6 +103,24 @@ const EditUser = props => {
         setcurrentUser({ ...currentUser, [email]: value });
     };
 
+    const getMeta = () => {
+        const meta = {
+            columns: 2,
+            disabled: pending,
+            initialValues: currentUser,
+            fields: [
+                 // { name: ['name', 'first'], label: 'First Name', required: true },
+                { key: 'id_user', label: 'ID', required: true },
+                { key: 'email', label: 'Email', required: true },
+                { key: 'firstname', label: 'First Name', required: true },
+                { key: 'lastname', label: 'Last Name', required: true },
+                { key: 'username', label: 'Username', required: true },
+                { key: 'email', label: 'Email' },
+            ],
+        }
+        return meta
+    }
+
 
     const onReset = () => {
         form.resetFields();
@@ -111,6 +150,33 @@ const EditUser = props => {
 
     return (
         <div>
+            <Form layout="horizontal" form={form} onFinish={handleFinish} style={{ width: '800px' }}>
+                <h1 style={{ height: '40px', fontSize: '16px', marginTop: '50px', color: '#888' }}>
+                    User Infomation
+                    {viewMode && (
+                        <Button type="link" onClick={() => setViewMode(false)} style={{ float: 'right' }}>
+                            Edit
+                        </Button>
+                    )}
+                </h1>
+                <FormBuilder form={form} getMeta={getMeta} viewMode={viewMode} />
+                {!viewMode && (
+                    <Form.Item className="form-footer" wrapperCol={{ span: 16, offset: 4 }}>
+                        <Button htmlType="submit" type="primary" disabled={pending}>
+                            {pending ? 'Updating...' : 'Update'}
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                form.resetFields()
+                                setViewMode(true)
+                            }}
+                            style={{ marginLeft: '15px' }}
+                        >
+                            Cancel
+                        </Button>
+                    </Form.Item>
+                )}
+            </Form>
         {currentUser ? (
                 <div>
                 <h4>User</h4>
@@ -206,17 +272,8 @@ const EditUser = props => {
              
                  </Form>
 
-
-
         </div>
-) : (
-    <div>
-    <br />
-    <p>Please click on a User...</p>
-    </div>
-)}
-</div>
-    );
+    )
 };
 
 export default EditUser;
