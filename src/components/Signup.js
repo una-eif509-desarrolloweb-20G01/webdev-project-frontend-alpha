@@ -24,7 +24,7 @@ const tailLayout = {
 };
 
 const initialUserState = {
-   // "id_user": null,
+    "id_user": null,
     "firstmame" : "",
     "lastname" : "",
     "email" : "",
@@ -43,9 +43,12 @@ const Signup = (props) => {
      */
 
     /** Service methods **/
-    const signUpMethod = () => {
+    const signUpMethod = (user) => {
         UserService.signup(user)
             .then(response => {
+                
+                console.log("entra aqui al servicio")
+                console.log(response.data)
                 setUser(response.data);
                 form.resetFields();
                 setError(false);
@@ -67,6 +70,7 @@ const Signup = (props) => {
 
     const onFinish = data => {
         console.log(user);
+        console.log("eonfinisho")
         signUpMethod();
     };
 
@@ -93,10 +97,11 @@ const Signup = (props) => {
             setPending(false)
             console.log(values);
 
-            setUser(values)
-            console.log("-------");
+         //   setUser(values)
+
             console.log(user);
-            signUpMethod();
+   
+            signUpMethod(user);
             setViewMode(true)
             Modal.success({
                 title: 'Success',
