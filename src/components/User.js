@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from "react";
-import Select, {Form, Input, Button,Table, Alert, Modal} from 'antd';
+import Select, {Form, Input, Button,Table, Alert, Modal,notification} from 'antd';
 
 import UserService from "../services/user.service";
 import {Link} from "react-router-dom";
@@ -35,8 +35,15 @@ const User = (props) => {
         getAllUserMethod();
     },[]);
 
+/** Notification */
+const [message, setMessage] = useState("");
+const openNotification = () => {
+    notification.open({
+      message: 'Notification',
+      description: message,
 
-
+    });
+  };
     /** Service methods **/
     const getAllUserMethod = () => {
         UserService.getAll()
@@ -54,7 +61,7 @@ const User = (props) => {
             });
     }
     /** Handle actions in the Table **/
-    const [message, setMessage] = useState("");
+
 
   
     const [requiredMark, setRequiredMarkType] = useState('optional');
@@ -67,9 +74,11 @@ const User = (props) => {
                 console.log(response.data);
                 console.log("se ejecuto bien");
                 setMessage("The User was deleted successfully!");
+                openNotification();
             })
             .catch(e => {
                 console.log("no se ejecuto bien");
+                setMessage("The User was not deleted successfully!");
                 console.log(e);
             });
     };
@@ -97,7 +106,7 @@ const User = (props) => {
       visible: false,
     });
   };
-    
+  
 /** End handle actions in the table */
     const columns = [
         {
@@ -127,8 +136,8 @@ const User = (props) => {
         },
         {
             title: 'Delete',
-          //  render:  (user) => <button onClick={deleteUser(user.id_user)}> Delete </button>,
-          render:  (user) => <button onClick={showModal}> Delete </button>,
+           render:  (user) => <button onClick={deleteUser(user.id_user)}> Delete </button>,
+          //render:  (user) => <button onClick={showModal}> Delete </button>,
      
         }
     ];
