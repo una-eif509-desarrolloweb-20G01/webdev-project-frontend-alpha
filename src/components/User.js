@@ -7,6 +7,7 @@ import Login from "./Login";
 
 
 import FormBuilder from "antd-form-builder";
+import {PlusCircleTwoTone} from "@ant-design/icons";
 
 const initialUserListState = [
     {
@@ -162,7 +163,7 @@ const openNotification = () => {
 
         <div className="col-md-6">
         <h4>User List</h4>        <Link to={"/add_user"}>
-        <Button type="primary" htmlType="button">
+        <Button type="primary" htmlType="button" icon={<PlusCircleTwoTone />}>
         Add
         </Button>
         </Link>

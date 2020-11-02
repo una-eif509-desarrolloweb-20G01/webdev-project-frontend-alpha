@@ -87,9 +87,9 @@ const EditTimeSheet = props => {
             initialValues: currentTimeSheet,
             fields: [
                 // { name: ['name', 'first'], label: 'First Name', required: true },
-                { key: 'id_time', label: 'ID', required: true },
+                { key: 'id', label: 'ID', required: true },
                 { key: 'timesheet_date', label: 'Date', required: true },
-                { key: 'monday', label: 'Mo', required: true },
+                { key: 'monday', label: 'Monday', required: true },
                 { key: 'tuesday', label: 'Tuesday', required: true },
                 { key: 'wednesday', label: 'Wednesday', required: true },
                 { key: 'thursday', label: 'Thursday', required: true },
@@ -97,10 +97,10 @@ const EditTimeSheet = props => {
                 { key: 'saturday', label: 'Saturday', required: true },
                 { key: 'sunday', label: 'Sunday', required: true },
                 { key: 'pay', label: 'Pay', required: true },
-                { key: 'id_user', label: 'User', required: true },
+                { key: 'id_user.id_user', label: 'User', required: true },
                 { key: 'approved', label: 'Approved' },
                 { key: 'payed', label: 'Payed', required: true },
-                { key: 'id_department', label: 'Department', required: true },
+                { key: 'id_department.id_department', label: 'Department', required: true },
             ],
         }
         return meta
