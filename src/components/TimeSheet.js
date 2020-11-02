@@ -37,7 +37,7 @@ const TimeSheet = (props) => {
 
     useEffect(() => {
         getAllTimeSheetsMethod();
-    },);
+    },[]);
 
     /** Service methods **/
     const getAllTimeSheetsMethod = () => {
