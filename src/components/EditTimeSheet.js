@@ -1,20 +1,67 @@
-import React, { useState, useEffect } from "react";
-import UserService from "../services/user.service";
+import React, {useState, useEffect, useCallback} from "react";
+import TimeSheetService from "../services/timesheet.service";
+import {Form, Input, Button, Alert, Modal} from 'antd';
+import FormBuilder from "antd-form-builder";
 
 const EditTimeSheet = props => {
     const initialTimeSheetState = {
-        id_timesheet: null,
-        timesheet_name: ""
+        id_time: null,
+        timesheet_date: "2020-01-01",
+        monday: 0,
+        tuesday: 0,
+        wednesday: 0,
+        thursday: 0,
+        friday: 0,
+        saturday: 0,
+        sunday: 0,
+        pay: 0,
+        id_user: null ,
+        approved: false,
+        payed: false,
+        id_department: null
     };
-    const [currentUser, setcurrentUser] = useState(initialTimeSheetState);
+
+    const [currentTimeSheet, setcurrentTimeSheet] = useState(initialTimeSheetState);
+    const [viewMode, setViewMode] = useState(true)
+    const [pending, setPending] = useState(false)
+    const handleFinish = useCallback(values => {
+        console.log('Submit: ', values)
+        setPending(true)
+        setTimeout(() => {
+            setPending(false)
+            setcurrentTimeSheet(values)
+            setViewMode(true)
+            Modal.success({
+                title: 'Success',
+                content: 'Information updated.',
+            })
+        }, 1500)
+    })
     const [message, setMessage] = useState("");
 
     const [error, setError, submitted, setSubmitted] = useState(false);
 
-    const getUser = id => {
-        UserService.get(id)
+    const [requiredMark, setRequiredMarkType] = useState('optional');
+
+    const layout = {
+        labelCol: {
+            span: 2,
+        },
+        wrapperCol: {
+            span: 3,
+        },
+    };
+
+    const tailLayout = {
+        wrapperCol: {
+            offset: 2,
+            span: 8,
+        },
+    };
+    const getTimeSheet = id => {
+        TimeSheetService.get(id)
             .then(response => {
-                setcurrentUser(response.data);
+                setcurrentTimeSheet(response.data);
                 console.log(response.data);
             })
             .catch(e => {
@@ -22,30 +69,61 @@ const EditTimeSheet = props => {
             });
     };
 
+
+    const [form] = Form.useForm();
     useEffect(() => {
-        getUser(props.match.params.id);
+        getTimeSheet(props.match.params.id);
     }, [props.match.params.id]);
 
     const handleInputChange = event => {
         const { email, value } = event.target;
-        setcurrentUser({ ...currentUser, [email]: value });
+        setcurrentTimeSheet({ ...currentTimeSheet, [email]: value });
+    };
+
+    const getMeta = () => {
+        const meta = {
+            columns: 2,
+            disabled: pending,
+            initialValues: currentTimeSheet,
+            fields: [
+                // { name: ['name', 'first'], label: 'First Name', required: true },
+                { key: 'id_time', label: 'ID', required: true },
+                { key: 'timesheet_date', label: 'Date', required: true },
+                { key: 'monday', label: 'Mo', required: true },
+                { key: 'tuesday', label: 'Tuesday', required: true },
+                { key: 'wednesday', label: 'Wednesday', required: true },
+                { key: 'thursday', label: 'Thursday', required: true },
+                { key: 'friday', label: 'Friday', required: true },
+                { key: 'saturday', label: 'Saturday', required: true },
+                { key: 'sunday', label: 'Sunday', required: true },
+                { key: 'pay', label: 'Pay', required: true },
+                { key: 'id_user', label: 'User', required: true },
+                { key: 'approved', label: 'Approved' },
+                { key: 'payed', label: 'Payed', required: true },
+                { key: 'id_department', label: 'Department', required: true },
+            ],
+        }
+        return meta
     };
 
 
+    const onReset = () => {
+        form.resetFields();
+    };
 
-    const updateUser = () => {
-        UserService.update(currentUser.id_user, currentUser)
+    const updateTimeSheet = () => {
+        TimeSheetService.update(currentTimeSheet.id_timesheet, currentTimeSheet)
             .then(response => {
                 console.log(response.data);
-                setMessage("The User was updated successfully!");
+                setMessage("The TimeSheet was updated successfully!");
             })
             .catch(e => {
                 console.log(e);
             });
     };
 
-    const deleteUser = () => {
-        UserService.remove(currentUser.id_user)
+    const deleteTimeSheet = () => {
+        TimeSheetService.remove(currentTimeSheet.id_timesheet)
             .then(response => {
                 console.log(response.data);
 
@@ -57,52 +135,36 @@ const EditTimeSheet = props => {
 
     return (
         <div>
-        {currentUser ? (
-                <div className="edit-form">
-                <h4>User</h4>
-                <form>
-                <div className="form-group">
-            <label htmlFor="user_email">Email: </label>
-            <input type="text" className="form-control" id="user_email" name="user_email" value={currentUser.email} onChange={handleInputChange} />
+            <Form layout="horizontal" form={form} onFinish={handleFinish} style={{ width: '800px' }}>
+                <h1 style={{ height: '40px', fontSize: '16px', marginTop: '50px', color: '#888' }}>
+                    TimeSheet Information
+                    {viewMode && (
+                        <Button type="link" onClick={() => setViewMode(false)} style={{ float: 'right' }}>
+                            Edit
+                        </Button>
+                    )}
+                </h1>
+                <FormBuilder form={form} getMeta={getMeta} viewMode={viewMode} />
+                {!viewMode && (
+                    <Form.Item className="form-footer" wrapperCol={{ span: 16, offset: 4 }}>
+                        <Button htmlType="submit" type="primary" disabled={pending}>
+                            {pending ? 'Updating...' : 'Update'}
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                form.resetFields()
+                                setViewMode(true)
+                            }}
+                            style={{ marginLeft: '15px' }}
+                        >
+                            Cancel
+                        </Button>
+                    </Form.Item>
+                )}
+            </Form>
 
-            <label htmlFor="first_name">Name: </label>
-            <input type="text" className="form-control" id="first_name" name="first_name" value={currentUser.firstname} onChange={handleInputChange} />
-    
-            <label htmlFor="last_name">Last name: </label>
-            <input type="text" className="form-control" id="last_name" name="last_name" value={currentUser.lastname} onChange={handleInputChange} />
-    
 
-            <label htmlFor="username">Username: </label>
-            <input type="text" className="form-control" id="username" name="username" value={currentUser.username} onChange={handleInputChange} />
-    
-
-    </div>
-
-
-
-    </form>
-
-
-<button className="badge badge-danger mr-2" onClick={deleteUser}>
-        Delete
-        </button>
-
-        <button
-    type="submit"
-    className="badge badge-success"
-    onClick={updateUser}
-        >
-        Update
-        </button>
-        <p>{message}</p>
         </div>
-) : (
-    <div>
-    <br />
-    <p>Please click on a User...</p>
-    </div>
-)}
-</div>
     );
 };
 
