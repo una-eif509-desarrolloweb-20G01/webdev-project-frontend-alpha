@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from "react";
-import {Alert, Button, Table} from 'antd';
+import {Alert, Button, notification, Table} from 'antd';
 
 import DepartmentService from "../services/department.service";
 import {Link} from "react-router-dom";
 import Login from "./Login";
+import UserService from "../services/user.service";
 
 const initialDepartmentListState = [
     {
@@ -28,6 +29,15 @@ const Department = (props) => {
         getAllDepartmentsMethod();
     },[]);
 
+    /** Notification */
+    const [message, setMessage] = useState("");
+    const openNotification = () => {
+        notification.open({
+            message: 'Notification',
+            description: message,
+
+        });
+    };
     /** Service methods **/
     const getAllDepartmentsMethod = () => {
         DepartmentService.getAll()
@@ -47,6 +57,21 @@ const Department = (props) => {
     }
 
     /** Handle actions in the Form **/
+    const deleteDepartment= (departmentRemoval) => {
+
+        DepartmentService.remove(departmentRemoval)
+            .then(response => {
+                console.log(response.data);
+                console.log("se ejecuto bien");
+                setMessage("The Department was deleted successfully!");
+                openNotification();
+            })
+            .catch(e => {
+                console.log("no se ejecuto bien");
+                setMessage("The Department was not deleted successfully!");
+                console.log(e);
+            });
+    };
 
     /** General Methods **/
     const columns = [
@@ -64,7 +89,13 @@ const Department = (props) => {
         title: 'Editar',
         render:  (department) => <a href={"/edit_department/"+department.id_department}>Editar</a>,
  
-      }
+      },
+        {
+            title: 'Delete',
+            render:  (department) => <button onClick={deleteDepartment(department.id_department)}> Delete </button>,
+            //render:  (user) => <button onClick={showModal}> Delete </button>,
+
+        }
     ];
 
     const refreshList = () => {

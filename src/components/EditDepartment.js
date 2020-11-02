@@ -113,7 +113,7 @@ const getMeta = () => {
         initialValues: currentDepartment,
         fields: [
             { key: 'id_department', label: 'ID', required: true },
-            { key: 'department_name', label: 'department name', required: true },
+            { key: 'department_name', label: 'Name', required: true },
 
 
         ],
@@ -129,7 +129,7 @@ const getMeta = () => {
         <div>
             <Form layout="horizontal" form={form} onFinish={handleFinish} style={{ width: '800px' }}>
                 <h1 style={{ height: '40px', fontSize: '16px', marginTop: '50px', color: '#888' }}>
-                    User Infomation
+                    Department Infomation
                     {viewMode && (
                         <Button type="link" onClick={() => setViewMode(false)} style={{ float: 'right' }}>
                             Edit
