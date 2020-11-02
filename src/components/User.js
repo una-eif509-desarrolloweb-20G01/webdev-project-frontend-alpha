@@ -97,14 +97,8 @@ const User = (props) => {
         },
         {
             title: 'Delete',
-            render:  (user) => (
-                //modal window confirm user removal
-                <Space size="middle">
-                    <Button type="primary" onClick={() => this.setModal1Visible(true)}>
-
-
-                </Space>
-              ),
+            render:  (user) => <a href={"/edit_user/"+user.id_user}>Edit</a>,
+     
      
         }
     ];
