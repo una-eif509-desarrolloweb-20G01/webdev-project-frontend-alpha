@@ -1,11 +1,12 @@
-import React, {useState, useEffect} from "react";
-import {Alert, Button, Table,Space,Modal} from 'antd';
+import React, {useState, useEffect, useCallback} from "react";
+import Select, {Form, Input, Button,Table, Alert, Modal} from 'antd';
 
 import UserService from "../services/user.service";
 import {Link} from "react-router-dom";
 import Login from "./Login";
 
 
+import FormBuilder from "antd-form-builder";
 
 const initialUserListState = [
     {
@@ -53,21 +54,43 @@ const User = (props) => {
             });
     }
     /** Handle actions in the Table **/
-    const deleteUser = () => {
-        UserService.remove(currentUser.id_user)
+    const [message, setMessage] = useState("");
+
+  
+    const [requiredMark, setRequiredMarkType] = useState('optional');
+
+
+    const deleteUser = (userRemoval) => {
+
+        UserService.remove(userRemoval)
             .then(response => {
                 console.log(response.data);
-
+                console.log("se ejecuto bien");
+                setMessage("The User was deleted successfully!");
             })
             .catch(e => {
+                console.log("no se ejecuto bien");
                 console.log(e);
             });
     };
 
     const [state, setModal] = useState(false);
    
-
- 
+    const [viewMode, setViewMode] = useState(true)
+    const [pending, setPending] = useState(false)
+    const handleFinish = useCallback(values => {
+        console.log('Submit: ', values)
+        setPending(true)
+        setTimeout(() => {
+            setPending(false)
+            setCurrentUser(values)
+            setViewMode(true)
+            Modal.success({
+                title: 'Success',
+                content: 'Infomation updated.',
+            })
+        }, 1500)
+    })
 /** End handle actions in the table */
     const columns = [
         {
@@ -97,7 +120,7 @@ const User = (props) => {
         },
         {
             title: 'Delete',
-            render:  (user) => <a href={"/edit_user/"+user.id_user}>Delete</a>,
+            render:  (user) => <button onClick={deleteUser(user.id_user)}> Delete </button>,
      
      
         }

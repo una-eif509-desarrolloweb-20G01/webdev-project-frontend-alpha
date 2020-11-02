@@ -1,9 +1,8 @@
 import React, {useState, useEffect, useCallback} from "react";
 import UserService from "../services/user.service";
+import DepartmentService from "../services/department.service";
 import Select, {Form, Input, Button, Alert, Modal} from 'antd';
 import FormBuilder from "antd-form-builder";
-import DepartmentService from "../services/department.service";
-
 const EditUser = props => {
     const initialUserState = {
         id_user: null,
@@ -64,10 +63,12 @@ const EditUser = props => {
     const getUser = id => {
         UserService.get(id)
             .then(response => {
+                console.log("se ejecuto bien");
                 setcurrentUser(response.data);
                 console.log(response.data);
             })
             .catch(e => {
+                console.log("no se ejecuto bien");
                 console.log(e);
             });
     };
