@@ -1,6 +1,9 @@
-import React, {useState} from "react";
-import {Form, Alert, Input, Button} from 'antd';
+import React, {useState, useEffect, useCallback} from "react";
+
 import {EyeInvisibleOutlined, EyeTwoTone, UserOutlined} from '@ant-design/icons';
+
+import Select, {Form, Input, Button, Alert, Modal} from 'antd';
+import FormBuilder from "antd-form-builder";
 
 import UserService from "../services/user.service";
 
@@ -21,18 +24,18 @@ const tailLayout = {
 };
 
 const initialUserState = {
-    "idUser": null,
-    "firstName" : "",
-    "lastName" : "",
+   // "id_user": null,
+    "firstmame" : "",
+    "lastname" : "",
     "email" : "",
     "username": "",
     "password": ""
 };
 
 const Signup = (props) => {
-    const [form] = Form.useForm();
     const [user, setUser] = useState(initialUserState);
     const [error, setError] = useState(false);
+
 
     /**
      * React Hooks
@@ -72,101 +75,77 @@ const Signup = (props) => {
         form.resetFields();
     };
 
+
+
+
+    /** Form updated */
+    const [viewMode, setViewMode] = useState(true)
+    const [pending, setPending] = useState(false)
+    const [form] = Form.useForm();
+    useEffect(() => {
+       
+    }, []);
+
+    const handleFinish = useCallback(values => {
+        console.log('Submit: ', values)
+        setPending(true)
+        setTimeout(() => {
+            setPending(false)
+            console.log(values);
+
+            setUser(values)
+            console.log("-------");
+            console.log(user);
+            signUpMethod();
+            setViewMode(true)
+            Modal.success({
+                title: 'Success',
+                content: 'User Signed',
+            })
+        }, 1500)
+    })
+
+    const getMeta = () => {
+        const meta = {
+            columns: 2,
+            disabled: pending,
+
+            fields: [
+                 { key: 'email', label: 'Email', required: true },
+                { key: 'firstname', label: 'First Name', required: true },
+                { key: 'lastname', label: 'Last Name', required: true },
+                { key: 'username', label: 'Username', required: true },
+                { key: 'password', label: 'password', required: true },
+            ],
+        }
+        return meta
+    };
+    /**------------- */
     return (
         <div>
-        <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
-        <Form.Item
-    name="firstName"
-    label="First Name"
-    rules={[
-            {
-                required: true,
-            },
-]}
->
-<Input
-    name="firstName"
-    onChange={handleInputChange}
-    placeholder="First Name"
-        />
-        </Form.Item>
-        <Form.Item
-    name="lastName"
-    label="Last Name"
-    rules={[
-            {
-                required: true,
-            },
-]}
->
-<Input
-    name="lastName"
-    onChange={handleInputChange}
-    placeholder="Last Name"
-        />
-        </Form.Item>
-        <Form.Item
-    name="email"
-    label="Email"
-    rules={[
-            {
-                required: true,
-            },
-]}
->
-<Input
-    name="email"
-    onChange={handleInputChange}
-    placeholder="Email"
-        />
-        </Form.Item>
-        <Form.Item
-    name="username"
-    label="User Name"
-    rules={[
-            {
-                required: true,
-            },
-]}
->
-<Input
-    name="username"
-    prefix={<UserOutlined className="site-form-item-icon"/>}
-    onChange={handleInputChange}
-    placeholder="User Name"
-        />
-        </Form.Item>
-        <Form.Item
-    name="password"
-    label="Password"
-    rules={[
-            {
-                required: true,
-            },
-]}
->
-<Input.Password
-    name="password"
-    onChange={handleInputChange}
-    placeholder="your password"
-    iconRender={visible => (visible ? <EyeTwoTone/> : <EyeInvisibleOutlined/>)}
-    />
-    </Form.Item>
-    <Form.Item {...tailLayout}>
-<Button type="primary" htmlType="submit">
-        Submit
-        </Button>
-        <Button htmlType="button" onClick={onReset}>
-        Reset
-        </Button>
-        </Form.Item>
+        <Form layout="horizontal" form={form} onFinish={handleFinish} style={{ width: '800px' }}>
+            <h1 style={{ height: '40px', fontSize: '16px', marginTop: '50px', color: '#888' }}>
+                User Infomation
+           
+            </h1>
+            <FormBuilder form={form} getMeta={getMeta} viewMode={false}  />
+            
+                <Form.Item className="form-footer" wrapperCol={{ span: 16, offset: 4 }}>
+                    <Button htmlType="submit" type="primary" disabled={pending}>
+                        {pending ? 'Signing...' : 'Signup'}
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            form.resetFields()
+                            setViewMode(true)
+                        }}
+                        style={{ marginLeft: '15px' }}
+                    >
+                        Cancel
+                    </Button>
+                </Form.Item>
+            
         </Form>
-    {user.idUser > 0 ? (
-        <Alert message="User Saved" type="success" showIcon closable />
-    ) : null}
-    {error ? (
-        <Alert message="Error in the system. Try again later." type="error" showIcon closable/>
-    ) : null}
 </div>
 )
 };

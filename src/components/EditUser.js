@@ -1,8 +1,10 @@
 import React, {useState, useEffect, useCallback} from "react";
-import UserService from "../services/user.service";
-import DepartmentService from "../services/department.service";
 import Select, {Form, Input, Button, Alert, Modal} from 'antd';
 import FormBuilder from "antd-form-builder";
+
+import UserService from "../services/user.service";
+import DepartmentService from "../services/department.service";
+
 const EditUser = props => {
     const initialUserState = {
         id_user: null,
