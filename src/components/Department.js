@@ -4,7 +4,7 @@ import {Alert, Button, notification, Table} from 'antd';
 import DepartmentService from "../services/department.service";
 import {Link} from "react-router-dom";
 import Login from "./Login";
-import UserService from "../services/user.service";
+import { EditTwoTone,DeleteTwoTone,PlusCircleTwoTone } from '@ant-design/icons';
 
 const initialDepartmentListState = [
     {
@@ -86,13 +86,13 @@ const Department = (props) => {
         }
         ,
         {
-        title: 'Editar',
-        render:  (department) => <a href={"/edit_department/"+department.id_department}>Editar</a>,
+        title: 'Edit',
+        render:  (department) => <a href={"/edit_department/"+department.id_department}> <EditTwoTone /></a>,
  
       },
         {
             title: 'Delete',
-            render:  (department) => <button onClick={deleteDepartment(department.id_department)}> Delete </button>,
+            render:  (department) => <DeleteTwoTone onClick={deleteDepartment(department.id_department)} /> ,
             //render:  (user) => <button onClick={showModal}> Delete </button>,
 
         }
@@ -116,14 +116,14 @@ const Department = (props) => {
 
         <div className="col-md-6">
         <h4>Department List</h4>        <Link to={"/add_department"}>
-        <Button type="primary" htmlType="button">
+        <Button type="primary" htmlType="button" icon={<PlusCircleTwoTone />}>
         Add
         </Button>
         </Link>
     <Table rowKey={user => departmentList.id_user } columns={columns} dataSource={departmentList} size="small" 
         
     />
-   
+
     </div>
 
     </div>

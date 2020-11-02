@@ -30,9 +30,6 @@ const EditDepartment = props => {
         getDepartment(props.match.params.id);
     }, [props.match.params.id]);
 
-
-
-
     const updateDepartment = () => {
         DepartmentService.update(currentDepartment.id_department, currentDepartment)
             .then(response => {
@@ -129,7 +126,7 @@ const getMeta = () => {
         <div>
             <Form layout="horizontal" form={form} onFinish={handleFinish} style={{ width: '800px' }}>
                 <h1 style={{ height: '40px', fontSize: '16px', marginTop: '50px', color: '#888' }}>
-                    Department Infomation
+                    Department Information
                     {viewMode && (
                         <Button type="link" onClick={() => setViewMode(false)} style={{ float: 'right' }}>
                             Edit
@@ -154,8 +151,6 @@ const getMeta = () => {
                     </Form.Item>
                 )}
             </Form>
-       
-
         </div>
     );
 };
