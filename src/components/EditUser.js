@@ -1,11 +1,26 @@
 import React, { useState, useEffect } from "react";
 import UserService from "../services/user.service";
-import {Form, Input, Button, Alert} from 'antd';
+import {Form, Input, Button, Alert,Select} from 'antd';
+
+import DepartmentService from "../services/department.service";
 const EditUser = props => {
     const initialUserState = {
         id_user: null,
-        firstname: ""
+        email: "",
+        firstname: "",
+        lastname: ""
     };
+    const initialDepartmentListState = [
+        {
+            "id_department": 0,
+            "department_name": ""
+        }
+    ];
+
+
+    
+    const [departmentList, setDepartmentList] = useState(initialDepartmentListState);
+    const { Option } = Select;
     const [currentUser, setcurrentUser] = useState(initialUserState);
     const [message, setMessage] = useState("");
   
@@ -38,6 +53,25 @@ const EditUser = props => {
                 console.log(e);
             });
     };
+
+    const getAllDepartmentsMethod = () => {
+        DepartmentService.getAll()
+            .then(response => {
+                setDepartmentList(response.data);
+                console.log(response.data);
+            })
+            .catch(err => {
+                console.log(err);
+                setError(err)
+                if (err.response.status === 401) {
+
+                    window.location.reload();
+                }
+            });
+    }
+
+
+    
     const [form] = Form.useForm();
     useEffect(() => {
         getUser(props.match.params.id);
@@ -80,18 +114,34 @@ const EditUser = props => {
         {currentUser ? (
                 <div>
                 <h4>User</h4>
-                <label htmlFor="user_email">Email: </label>
-            <input type="text" className="form-control" id="user_email" name="user_email" value={currentUser.email} onChange={handleInputChange} />
+
+
 
                 <Form {...layout} form={form} name="control-hooks" >
+
+
+                <Form.Item
+                    name="email"
+                    label="email">
+                        
+                    <Input
+                        type="email"
+                        
+                        onChange={handleInputChange}
+                        placeholder="email"
+                        
+                        />
+                </Form.Item>
+
+
                 <Form.Item
                     name="id_user"
                     label="ID">
                     <Input
-                        type="text"
+                        type="number"
                         onChange={handleInputChange}
                         placeholder="ID"
-                        value="algo"
+                        value="id"
                         />
                 </Form.Item>
 
@@ -112,13 +162,15 @@ const EditUser = props => {
                      />
                  </Form.Item>
 
+
+
+
+
                  <Form.Item
                     name="lastname"
                     label="lastname"
                     rules={[
-                        {
-                            required: true,
-                        },
+      
                     ]}
                 >
                     <Input
@@ -133,9 +185,7 @@ const EditUser = props => {
                     name="User name"
                     label="username"
                     rules={[
-                        {
-                            required: true,
-                        },
+  
                     ]}
                 >
                     <Input
