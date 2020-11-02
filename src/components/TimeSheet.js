@@ -62,7 +62,7 @@ const TimeSheet = (props) => {
     const columns = [
         {
             title: 'ID',
-            render: (timesheet) => timesheet.id_time
+            render: (timesheet) => timesheet.id
         },
         {
             title: 'Date',
@@ -118,7 +118,7 @@ const TimeSheet = (props) => {
         },
         {
             title: 'Editar',
-            render:  (timesheet) => <a href={"/edit_timesheet/"+timesheet.id_time}>Editar</a>,
+            render:  (timesheet) => <a href={"/edit_timesheet/"+timesheet.id}>Editar</a>,
 
         }
     ];
