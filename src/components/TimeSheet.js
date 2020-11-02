@@ -16,7 +16,7 @@ const initialTimeSheetListState = [
         "saturday": 0,
         "sunday": 0,
         "pay": 0,
-        "id_user": "" ,
+        "id_user": 0 ,
         "approved": false,
         "payed": false,
         "id_department": ""
