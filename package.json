@@ -7,13 +7,15 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "antd": "^4.7.3",
+    "antd-form-builder": "^2.1.2",
     "axios": "^0.20.0",
     "cors": "^2.8.5",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.0",
-    "typescript": "^4.0.3"
+    "typescript": "^4.0.3",
+    "antd-form-builder": "*"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useCallback} from "react";
 import UserService from "../services/user.service";
-import {Form, Input, Button, Alert, Modal} from 'antd';
+import Select, {Form, Input, Button, Alert, Modal} from 'antd';
 import FormBuilder from "antd-form-builder";
-import {Form, Input, Button, Alert,Select} from 'antd';
 import DepartmentService from "../services/department.service";
 
 const EditUser = props => {
@@ -12,9 +11,6 @@ const EditUser = props => {
         firstname : "",
         lastname: "",
         username: ""
-        firstname: "",
-        lastname: ""
-
     };
     const initialDepartmentListState = [
         {
@@ -26,7 +22,7 @@ const EditUser = props => {
 
     
     const [departmentList, setDepartmentList] = useState(initialDepartmentListState);
-    const { Option } = Select;
+    // const { Option } = Select;
     const [currentUser, setcurrentUser] = useState(initialUserState);
     const [viewMode, setViewMode] = useState(true)
     const [pending, setPending] = useState(false)
@@ -90,8 +86,6 @@ const EditUser = props => {
                 }
             });
     }
-
-
     
     const [form] = Form.useForm();
     useEffect(() => {
@@ -119,7 +113,7 @@ const EditUser = props => {
             ],
         }
         return meta
-    }
+    };
 
 
     const onReset = () => {
@@ -177,103 +171,105 @@ const EditUser = props => {
                     </Form.Item>
                 )}
             </Form>
-        {currentUser ? (
-                <div>
-                <h4>User</h4>
+        {/*{currentUser ? (*/}
+        {/*        <div>*/}
+        {/*        <h4>User</h4>*/}
 
 
 
-                <Form {...layout} form={form} name="control-hooks" >
+        {/*        <Form {...layout} form={form} name="control-hooks" >*/}
 
 
-                <Form.Item
-                    name="email"
-                    label="email">
-                        
-                    <Input
-                        type="email"
-                        
-                        onChange={handleInputChange}
-                        placeholder="email"
-                        
-                        />
-                </Form.Item>
+        {/*        <Form.Item*/}
+        {/*            name="email"*/}
+        {/*            label="email">*/}
+        {/*                */}
+        {/*            <Input*/}
+        {/*                type="email"*/}
+        {/*                */}
+        {/*                onChange={handleInputChange}*/}
+        {/*                placeholder="email"*/}
+        {/*                */}
+        {/*                />*/}
+        {/*        </Form.Item>*/}
 
 
-                <Form.Item
-                    name="id_user"
-                    label="ID">
-                    <Input
-                        type="number"
-                        onChange={handleInputChange}
-                        placeholder="ID"
-                        value="id"
-                        />
-                </Form.Item>
+        {/*        <Form.Item*/}
+        {/*            name="id_user"*/}
+        {/*            label="ID">*/}
+        {/*            <Input*/}
+        {/*                type="number"*/}
+        {/*                onChange={handleInputChange}*/}
+        {/*                placeholder="ID"*/}
+        {/*                value="id"*/}
+        {/*                />*/}
+        {/*        </Form.Item>*/}
 
 
-                <Form.Item
-                    name="firstname"
-                    label="Name"
-                    rules={[
-                        {
-                            required: true,
-                        },
-                    ]}
-                >
-                    <Input
-                        name="firstname"
-                        onChange={handleInputChange}
-                        placeholder="Name"
-                     />
-                 </Form.Item>
+        {/*        <Form.Item*/}
+        {/*            name="firstname"*/}
+        {/*            label="Name"*/}
+        {/*            rules={[*/}
+        {/*                {*/}
+        {/*                    required: true,*/}
+        {/*                },*/}
+        {/*            ]}*/}
+        {/*        >*/}
+        {/*            <Input*/}
+        {/*                name="firstname"*/}
+        {/*                onChange={handleInputChange}*/}
+        {/*                placeholder="Name"*/}
+        {/*             />*/}
+        {/*         </Form.Item>*/}
 
 
 
 
 
-                 <Form.Item
-                    name="lastname"
-                    label="lastname"
-                    rules={[
-      
-                    ]}
-                >
-                    <Input
-                        name="lastname"
-                        onChange={handleInputChange}
-                        placeholder="last name"
-                        value={currentUser.lastname}
-                     />
-                 </Form.Item>
+        {/*         <Form.Item*/}
+        {/*            name="lastname"*/}
+        {/*            label="lastname"*/}
+        {/*            rules={[*/}
 
-                 <Form.Item
-                    name="User name"
-                    label="username"
-                    rules={[
-  
-                    ]}
-                >
-                    <Input
-                        name="username"
-                        onChange={handleInputChange}
-                        placeholder="User Name"
-                     />
-                 </Form.Item>
+        {/*            ]}*/}
+        {/*        >*/}
+        {/*            <Input*/}
+        {/*                name="lastname"*/}
+        {/*                onChange={handleInputChange}*/}
+        {/*                placeholder="last name"*/}
+        {/*                value={currentUser.lastname}*/}
+        {/*             />*/}
+        {/*         </Form.Item>*/}
 
-                 <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit" onClick={updateUser}>
-                        Update
-                    </Button>
-                    <Button htmlType="button" onClick={onReset}>
-                        Reset
-                    </Button>
-                </Form.Item>
-             
-                 </Form>
+        {/*         <Form.Item*/}
+        {/*            name="User name"*/}
+        {/*            label="username"*/}
+        {/*            rules={[*/}
+
+        {/*            ]}*/}
+        {/*        >*/}
+        {/*            <Input*/}
+        {/*                name="username"*/}
+        {/*                onChange={handleInputChange}*/}
+        {/*                placeholder="User Name"*/}
+        {/*             />*/}
+        {/*         </Form.Item>*/}
+
+        {/*         <Form.Item {...tailLayout}>*/}
+        {/*            <Button type="primary" htmlType="submit" onClick={updateUser}>*/}
+        {/*                Update*/}
+        {/*            </Button>*/}
+        {/*            <Button htmlType="button" onClick={onReset}>*/}
+        {/*                Reset*/}
+        {/*            </Button>*/}
+        {/*        </Form.Item>*/}
+        {/*     */}
+        {/*         </Form>*/}
+
+        {/*</div>*/}
 
         </div>
-    )
+    );
 };
 
 export default EditUser;

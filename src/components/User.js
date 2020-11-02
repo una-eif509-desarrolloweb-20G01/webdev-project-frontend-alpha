@@ -97,7 +97,7 @@ const User = (props) => {
         },
         {
             title: 'Delete',
-            render:  (user) => <a href={"/edit_user/"+user.id_user}>Edit</a>,
+            render:  (user) => <a href={"/edit_user/"+user.id_user}>Delete</a>,
      
      
         }
