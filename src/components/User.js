@@ -74,23 +74,30 @@ const User = (props) => {
             });
     };
 
-    const [state, setModal] = useState(false);
+ 
    
-    const [viewMode, setViewMode] = useState(true)
-    const [pending, setPending] = useState(false)
-    const handleFinish = useCallback(values => {
-        console.log('Submit: ', values)
-        setPending(true)
-        setTimeout(() => {
-            setPending(false)
-            setCurrentUser(values)
-            setViewMode(true)
-            Modal.success({
-                title: 'Success',
-                content: 'Infomation updated.',
-            })
-        }, 1500)
-    })
+    const [state, setState] = useState(false);
+    const  showModal = () => {
+    setState({
+      visible: true,
+    });
+  };
+
+  const handleOk = e => {
+    console.log(e);
+   
+    setState({
+      visible: false,
+    });
+  };
+
+  const handleCancel = e => {
+    console.log(e);
+    setState({
+      visible: false,
+    });
+  };
+    
 /** End handle actions in the table */
     const columns = [
         {
@@ -120,8 +127,8 @@ const User = (props) => {
         },
         {
             title: 'Delete',
-            render:  (user) => <button onClick={deleteUser(user.id_user)}> Delete </button>,
-     
+          //  render:  (user) => <button onClick={deleteUser(user.id_user)}> Delete </button>,
+          render:  (user) => <button onClick={showModal}> Delete </button>,
      
         }
     ];
@@ -150,12 +157,20 @@ const User = (props) => {
         Add
         </Button>
         </Link>
+
     <Table rowKey={user => userList.id_user } columns={columns} dataSource={userList} size="small" 
         
     />
    
     </div>
-
+    <Modal
+          title="User Delete Confirm"
+          visible={state.visible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
+          <p>confirm User Delete</p>
+        </Modal>
     </div>
 
     
