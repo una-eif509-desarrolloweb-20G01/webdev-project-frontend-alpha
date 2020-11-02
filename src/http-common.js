@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default axios.create({
-    baseURL: "http://localhost:8083/api/v1",
+    baseURL: "https://alpha-taskapp.herokuapp.com/api/v1/",
     headers: {
         "Content-type": "application/json",
         "Access-Control-Allow-Origin": "*",
