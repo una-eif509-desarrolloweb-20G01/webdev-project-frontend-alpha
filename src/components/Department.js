@@ -115,7 +115,7 @@ const Department = (props) => {
         <div className="list row">
 
         <div className="col-md-6">
-        <h4>User List</h4>        <Link to={"/edit_department"}>
+        <h4>Department List</h4>        <Link to={"/add_department"}>
         <Button type="primary" htmlType="button">
         Add
         </Button>
