@@ -75,10 +75,10 @@ const EditTimeSheet = props => {
         getTimeSheet(props.match.params.id);
     }, [props.match.params.id]);
 
-    const handleInputChange = event => {
-        const { email, value } = event.target;
-        setcurrentTimeSheet({ ...currentTimeSheet, [email]: value });
-    };
+    // const handleInputChange = event => {
+    //     const { email, value } = event.target;
+    //     setcurrentTimeSheet({ ...currentTimeSheet, [email]: value });
+    // };
 
     const getMeta = () => {
         const meta = {
@@ -98,7 +98,7 @@ const EditTimeSheet = props => {
                 { key: 'sunday', label: 'Sunday', required: true },
                 { key: 'pay', label: 'Pay', required: true },
                 { key: 'id_user.id_user', label: 'User', required: true },
-                { key: 'approved', label: 'Approved' },
+                { key: 'approved', label: 'Approved', required: true},
                 { key: 'payed', label: 'Payed', required: true },
                 { key: 'id_department.id_department', label: 'Department', required: true },
             ],
@@ -112,7 +112,7 @@ const EditTimeSheet = props => {
     };
 
     const updateTimeSheet = () => {
-        TimeSheetService.update(currentTimeSheet.id_timesheet, currentTimeSheet)
+        TimeSheetService.update(currentTimeSheet.id_time, currentTimeSheet)
             .then(response => {
                 console.log(response.data);
                 setMessage("The TimeSheet was updated successfully!");
@@ -123,7 +123,7 @@ const EditTimeSheet = props => {
     };
 
     const deleteTimeSheet = () => {
-        TimeSheetService.remove(currentTimeSheet.id_timesheet)
+        TimeSheetService.remove(currentTimeSheet.id_time)
             .then(response => {
                 console.log(response.data);
 
