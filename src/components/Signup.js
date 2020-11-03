@@ -25,7 +25,7 @@ const tailLayout = {
 
 const initialUserState = {
     "id_user": null,
-    "firstmame" : "",
+    "firstname" : "",
     "lastname" : "",
     "email" : "",
     "username": "",
@@ -43,12 +43,12 @@ const Signup = (props) => {
      */
 
     /** Service methods **/
-    const signUpMethod = (user) => {
+    const signUpMethod = () => {
         UserService.signup(user)
             .then(response => {
                 
-                console.log("entra aqui al servicio")
-                console.log(response.data)
+
+                console.log("---")
                 setUser(response.data);
                 form.resetFields();
                 setError(false);
@@ -62,20 +62,20 @@ const Signup = (props) => {
     /** Handle actions in the Form **/
 
     const handleInputChange = event => {
-        let {name, value} = event.target;
-        setUser({...user, [name]: value});
+        let {firstname, value} = event.target;
+        setUser({...user, [firstname]: value});
     };
 
     /** General Methods **/
 
     const onFinish = data => {
         console.log(user);
-        console.log("eonfinisho")
+
         signUpMethod();
     };
 
     const onReset = () => {
-        setUser(initialUserState);
+        setUser(user);
         form.resetFields();
     };
 
@@ -95,35 +95,28 @@ const Signup = (props) => {
         setPending(true)
         setTimeout(() => {
             setPending(false)
-            console.log(values);
 
-         //   setUser(values)
-
-            console.log(user);
-   
-            signUpMethod(user);
+            setUser(values)
+            signUpMethod();
             setViewMode(true)
-            Modal.success({
-                title: 'Success',
-                content: 'User Signed',
-            })
-        }, 1500)
+            Modal.success({title: 'Success',content: 'User Signed',})}, 1500)
     })
 
     const getMeta = () => {
-        const meta = {
-            columns: 2,
+        const user = {
+            columns: 1,
             disabled: pending,
 
             fields: [
-                 { key: 'email', label: 'Email', required: true },
+                { key: 'id_user', label: 'ID', required: true },
+                { key: 'email', label: 'Email', required: true },
                 { key: 'firstname', label: 'First Name', required: true },
                 { key: 'lastname', label: 'Last Name', required: true },
                 { key: 'username', label: 'Username', required: true },
                 { key: 'password', label: 'password', required: true },
             ],
         }
-        return meta
+        return user
     };
     /**------------- */
     return (

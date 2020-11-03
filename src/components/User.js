@@ -137,7 +137,8 @@ const openNotification = () => {
         },
         {
             title: 'Delete',
-           render:  (user) => <button onClick={deleteUser(user.id_user)}> Delete </button>,
+          // render:  (user) => <button onClick={deleteUser(user.id_user)}> Delete </button>,
+          render:  (user) => <button > Delete </button>,
           //render:  (user) => <button onClick={showModal}> Delete </button>,
      
         }
