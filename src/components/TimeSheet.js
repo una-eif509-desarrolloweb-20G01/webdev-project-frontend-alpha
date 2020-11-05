@@ -1,8 +1,11 @@
 import React, {useState, useEffect} from "react";
-import {Alert, Button, Table} from 'antd';
+import {Alert, Button, notification, Table} from 'antd';
 
 import TimeSheetService from "../services/timesheet.service";
 import {Link} from "react-router-dom";
+import DepartmentService from "../services/timesheet.service";
+import { EditTwoTone,DeleteTwoTone,PlusCircleTwoTone } from '@ant-design/icons';
+
 
 const initialTimeSheetListState = [
     {
@@ -39,6 +42,15 @@ const TimeSheet = (props) => {
         getAllTimeSheetsMethod();
     },[]);
 
+    const [message, setMessage] = useState("");
+    const openNotification = () => {
+        notification.open({
+            message: 'Notification',
+            description: message,
+
+        });
+    };
+
     /** Service methods **/
     const getAllTimeSheetsMethod = () => {
         TimeSheetService.getAll()
@@ -55,6 +67,22 @@ const TimeSheet = (props) => {
                 }
             });
     }
+
+    const deleteTimeSheet= (timesheetRemoval) => {
+
+        DepartmentService.remove(timesheetRemoval)
+            .then(response => {
+                console.log(response.data);
+                console.log("se ejecuto bien");
+                setMessage("The Department was deleted successfully!");
+                openNotification();
+            })
+            .catch(e => {
+                console.log("no se ejecuto bien");
+                setMessage("The Department was not deleted successfully!");
+                console.log(e);
+            });
+    };
 
     /** Handle actions in the Form **/
 
@@ -102,23 +130,29 @@ const TimeSheet = (props) => {
         },
         {
             title: 'User',
-            render: (timesheet) => timesheet.id_user
+            render: (timesheet) => timesheet.id_user.id_user
         },
         {
             title: 'Approved',
-            render: (timesheet) => timesheet.approved
+            render: (timesheet) => timesheet.approved+''
         },
         {
             title: 'Payed',
-            render: (timesheet) => timesheet.payed
+            render: (timesheet) => timesheet.payed+''
         },
         {
             title: 'Department',
-            render: (timesheet) => timesheet.id_department
+            render: (timesheet) => timesheet.id_department.id_department
         },
         {
             title: 'Editar',
             render:  (timesheet) => <a href={"/edit_timesheet/"+timesheet.id}>Editar</a>,
+
+        },
+        {
+            title: 'Delete',
+            render:  (timesheet) => <DeleteTwoTone onClick={deleteTimeSheet(timesheet.id_time)} /> ,
+            //render:  (user) => <button onClick={showModal}> Delete </button>,
 
         }
     ];
