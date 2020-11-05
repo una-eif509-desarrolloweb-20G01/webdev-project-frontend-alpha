@@ -156,7 +156,7 @@ const EditUser = props => {
         <div>
 
     <ReactToPrint
-        trigger={() => <button>Print this out!</button>}
+        trigger={() => <button>Print Report</button>}
         content={() => componentRef.current}
       />
       

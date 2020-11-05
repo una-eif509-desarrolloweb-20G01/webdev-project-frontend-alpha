@@ -62,7 +62,7 @@ const TimeSheet = (props) => {
     const columns = [
         {
             title: 'ID',
-            render: (timesheet) => timesheet.id_time
+            render: (timesheet) => timesheet.id
         },
         {
             title: 'Date',
@@ -102,19 +102,19 @@ const TimeSheet = (props) => {
         },
         {
             title: 'User',
-            render: (timesheet) => timesheet.id_user.id_user
+            render: (timesheet) => timesheet.id_user
         },
         {
             title: 'Approved',
-            render: (timesheet) => timesheet.approved+''
+            render: (timesheet) => timesheet.approved
         },
         {
             title: 'Payed',
-            render: (timesheet) => timesheet.payed+''
+            render: (timesheet) => timesheet.payed
         },
         {
             title: 'Department',
-            render: (timesheet) => timesheet.id_department.id_department
+            render: (timesheet) => timesheet.id_department
         },
         {
             title: 'Editar',
