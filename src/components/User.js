@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 import Login from "./Login";
 
 
+import ReactToPrint from "react-to-print";
 import FormBuilder from "antd-form-builder";
 import {PlusCircleTwoTone} from "@ant-design/icons";
 
@@ -161,7 +162,10 @@ const openNotification = () => {
     
 
         <div className="list row">
-
+  <ReactToPrint
+        trigger={() => <button>Print Report</button>}
+        content={() => componentRef.current}
+      />
         <div className="col-md-6">
         <h4>User List</h4>        <Link to={"/add_user"}>
         <Button type="primary" htmlType="button" icon={<PlusCircleTwoTone />}>
