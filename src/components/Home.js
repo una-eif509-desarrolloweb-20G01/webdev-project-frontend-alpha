@@ -1,20 +1,11 @@
 import React from "react";
+import logo from "../images/logo.png";
 
 const Home = (props) => {
-    /**
-     * React Hooks
-     * https://reactjs.org/docs/hooks-reference.html
-     */
-
-    /** Service methods **/
-
-    /** Handle actions in the Form **/
-
-    /** General Methods **/
-
     return (
         <div>
-            Project FronEnd Alpha
+            <h1>Project FrontEnd Alpha</h1>
+            <img src={logo} alt="logo"></img>
         </div>
         )
     };
