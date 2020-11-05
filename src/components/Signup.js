@@ -130,7 +130,7 @@ const Signup = (props) => {
             disabled: pending,
 
             fields: [
-          //      { key: 'id_user', label: 'ID', required: true },
+                { key: 'id_user', label: 'ID', required: true },
                 { key: 'email', label: 'Email', required: true },
                 { key: 'firstname', label: 'First Name', required: true },
                 { key: 'lastname', label: 'Last Name', required: true },
