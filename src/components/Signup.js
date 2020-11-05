@@ -2,10 +2,12 @@ import React, {useState, useEffect, useCallback} from "react";
 
 import {EyeInvisibleOutlined, EyeTwoTone, UserOutlined} from '@ant-design/icons';
 
-import Select, {Form, Input, Button, Alert, Modal} from 'antd';
+import {Form, Input, Button, Alert, Modal,Select} from 'antd';
 import FormBuilder from "antd-form-builder";
 
 import UserService from "../services/user.service";
+
+import DepartmentService from "../services/department.service";
 
 const layout = {
     labelCol: {
@@ -84,10 +86,30 @@ const Signup = (props) => {
     const [viewMode, setViewMode] = useState(true)
     const [pending, setPending] = useState(false)
     const [form] = Form.useForm();
+    /** agrega listado de departamentos al signup */
+    const [options, setOptions] = useState([]);
     useEffect(() => {
-       
-    }, []);
+        DepartmentService.getAll().then(response => {
+            
+            const data = [];
 
+            response.data.forEach((department, index ) => {
+                data.push({
+                    value: department.id,
+                    label: department.name
+                });
+            });
+
+            setOptions(data);
+        });
+    }, []);
+    const handleChange = (option) => {
+        setUser({...user, department: {
+                id: option.value,
+                name: option.label
+            }
+        });
+    };
     const handleFinish = useCallback(values => {
         console.log('Submit: ', values)
         setPending(true)
@@ -112,6 +134,7 @@ debugger;
                 { key: 'lastname', label: 'Last Name', required: true },
                 { key: 'username', label: 'Username', required: true },
                 { key: 'password', label: 'password', required: true },
+               
             ],
         }
         return user
@@ -140,7 +163,7 @@ debugger;
                         Cancel
                     </Button>
                 </Form.Item>
-            
+     
         </Form>
 </div>
 )

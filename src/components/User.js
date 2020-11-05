@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from "react";
+import React, {useState, useEffect, useCallback,useRef} from "react";
 import Select, {Form, Input, Button,Table, Alert, Modal,notification} from 'antd';
 
 import UserService from "../services/user.service";
@@ -157,21 +157,23 @@ const openNotification = () => {
         setCurrentUser(user);
         setCurrentIndex(index);
     };
-
+    const componentRef = useRef();
     return (
     
 
         <div className="list row">
-  <ReactToPrint
-        trigger={() => <button>Print Report</button>}
+  
+        <div className="col-md-6">
+        <h4>User List</h4>    
+        
+            <Link to={"/add_user"}>
+        <Button type="primary" htmlType="button" icon={<PlusCircleTwoTone />}> </Button>
+        </Link> 
+
+        <ReactToPrint
+        trigger={() => <Button type="primary" htmlType="button" icon={<PlusCircleTwoTone />}> PRINT REPORT</Button>}
         content={() => componentRef.current}
       />
-        <div className="col-md-6">
-        <h4>User List</h4>        <Link to={"/add_user"}>
-        <Button type="primary" htmlType="button" icon={<PlusCircleTwoTone />}>
-        Add
-        </Button>
-        </Link>
 
     <Table rowKey={user => userList.id_user } columns={columns} dataSource={userList} size="small" 
         
