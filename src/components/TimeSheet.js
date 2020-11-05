@@ -62,7 +62,7 @@ const TimeSheet = (props) => {
     const columns = [
         {
             title: 'ID',
-            render: (timesheet) => timesheet.id
+            render: (timesheet) => timesheet.id_time
         },
         {
             title: 'Date',

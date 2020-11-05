@@ -24,7 +24,7 @@ const tailLayout = {
 };
 
 const initialUserState = {
-    "id_user": null,
+ //   "id_user": null,
     "firstname" : "",
     "lastname" : "",
     "email" : "",
@@ -46,8 +46,6 @@ const Signup = (props) => {
     const signUpMethod = () => {
         UserService.signup(user)
             .then(response => {
-                
-
                 console.log("---")
                 setUser(response.data);
                 form.resetFields();
@@ -95,7 +93,7 @@ const Signup = (props) => {
         setPending(true)
         setTimeout(() => {
             setPending(false)
-
+debugger;
             setUser(values)
             signUpMethod();
             setViewMode(true)
@@ -108,7 +106,7 @@ const Signup = (props) => {
             disabled: pending,
 
             fields: [
-                { key: 'id_user', label: 'ID', required: true },
+          //      { key: 'id_user', label: 'ID', required: true },
                 { key: 'email', label: 'Email', required: true },
                 { key: 'firstname', label: 'First Name', required: true },
                 { key: 'lastname', label: 'Last Name', required: true },

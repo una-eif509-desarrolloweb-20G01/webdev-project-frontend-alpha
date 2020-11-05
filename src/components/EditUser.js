@@ -1,9 +1,12 @@
-import React, {useState, useEffect, useCallback} from "react";
+import React, {useState, useEffect, useCallback, useRef } from "react";
 import Select, {Form, Input, Button, Alert, Modal} from 'antd';
 import FormBuilder from "antd-form-builder";
 
 import UserService from "../services/user.service";
 import DepartmentService from "../services/department.service";
+
+
+import ReactToPrint from "react-to-print";
 
 const EditUser = props => {
     const initialUserState = {
@@ -20,7 +23,9 @@ const EditUser = props => {
         }
     ];
 
-
+/**
+ * Esto es del departamento..
+ */
     
     const [departmentList, setDepartmentList] = useState(initialDepartmentListState);
     // const { Option } = Select;
@@ -144,10 +149,18 @@ const EditUser = props => {
                 console.log(e);
             });
     };
-
+    const componentRef = useRef();
+    /** ver que si queda dentro se encicla. */
     return (
+        
         <div>
-            <Form layout="horizontal" form={form} onFinish={handleFinish} style={{ width: '800px' }}>
+
+    <ReactToPrint
+        trigger={() => <button>Print this out!</button>}
+        content={() => componentRef.current}
+      />
+      
+      <div ref={componentRef} ><Form layout="horizontal" form={form} onFinish={handleFinish} style={{ width: '800px' }}>
                 <h1 style={{ height: '40px', fontSize: '16px', marginTop: '50px', color: '#888' }}>
                     User Infomation
                     {viewMode && (
@@ -173,7 +186,9 @@ const EditUser = props => {
                         </Button>
                     </Form.Item>
                 )}
-            </Form>
+            </Form></div>
+
+            
        
 
         </div>
