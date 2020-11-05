@@ -45,7 +45,7 @@ const Signup = (props) => {
      */
 
     /** Service methods **/
-    const signUpMethod = () => {
+    const signUpMethod = (user) => {
         UserService.signup(user)
             .then(response => {
                 console.log("---")
@@ -115,9 +115,11 @@ const Signup = (props) => {
         setPending(true)
         setTimeout(() => {
             setPending(false)
-debugger;
+            debugger;
             setUser(values)
-            signUpMethod();
+            //aqui corregi con values igual que en el metodo
+           signUpMethod(values);
+          
             setViewMode(true)
             Modal.success({title: 'Success',content: 'User Signed',})}, 1500)
     })

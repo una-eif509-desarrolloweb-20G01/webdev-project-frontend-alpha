@@ -139,7 +139,7 @@ const openNotification = () => {
         {
             title: 'Delete',
           // render:  (user) => <button onClick={deleteUser(user.id_user)}> Delete </button>,
-          render:  (user) => <button > Delete </button>,
+          render:  (user) => <button danger type="link"> Delete </button>,
           //render:  (user) => <button onClick={showModal}> Delete </button>,
      
         }
@@ -167,19 +167,19 @@ const openNotification = () => {
         <h4>User List</h4>    
         
             <Link to={"/add_user"}>
-        <Button type="primary" htmlType="button" icon={<PlusCircleTwoTone />}> </Button>
+        <Button type="primary" htmlType="button" icon={<PlusCircleTwoTone />}> Add User </Button>
         </Link> 
 
         <ReactToPrint
-        trigger={() => <Button type="primary" htmlType="button" icon={<PlusCircleTwoTone />}> PRINT REPORT</Button>}
+        trigger={() => <Button type="default" htmlType="button"  > Print Report</Button>}
         content={() => componentRef.current}
       />
-
+<div ref={componentRef} >
     <Table rowKey={user => userList.id_user } columns={columns} dataSource={userList} size="small" 
         
     />
    
-    </div>
+    </div></div>
     <Modal
           title="User Delete Confirm"
           visible={state.visible}
