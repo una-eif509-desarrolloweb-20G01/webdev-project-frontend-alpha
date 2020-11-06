@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect,useRef} from "react";
 import {Alert, Button, notification, Table} from 'antd';
 
 import TimeSheetService from "../services/timesheet.service";
 import {Link} from "react-router-dom";
 import DepartmentService from "../services/timesheet.service";
 import { EditTwoTone,DeleteTwoTone,PlusCircleTwoTone } from '@ant-design/icons';
+import ReactToPrint from "react-to-print";
 
 
 const initialTimeSheetListState = [
@@ -90,7 +91,7 @@ const TimeSheet = (props) => {
     const columns = [
         {
             title: 'ID',
-            render: (timesheet) => timesheet.id
+            render: (timesheet) => timesheet.id_time
         },
         {
             title: 'Date',
@@ -145,14 +146,14 @@ const TimeSheet = (props) => {
             render: (timesheet) => timesheet.id_department.id_department
         },
         {
-            title: 'Editar',
-            render:  (timesheet) => <a href={"/edit_timesheet/"+timesheet.id}>Editar</a>,
+            title: 'Edit',
+            render:  (timesheet) => <a href={"/edit_timesheet/"+timesheet.id_time}>Editar</a>,
 
         },
         {
             title: 'Delete',
-            render:  (timesheet) => <DeleteTwoTone onClick={deleteTimeSheet(timesheet.id_time)} /> ,
-            //render:  (user) => <button onClick={showModal}> Delete </button>,
+            //render:  (timesheet) => <DeleteTwoTone onClick={deleteTimeSheet(timesheet.id_time)} /> ,
+
 
         }
     ];
@@ -168,13 +169,28 @@ const TimeSheet = (props) => {
         setCurrentIndex(index);
     };
 
+    const componentRef = useRef();
     return (
-        <div>
-            <Table rowKey={timesheet => timesheetList.id_time} columns={columns} dataSource={timesheetList}/>
-            {error ? (
-                <Alert message="Error in the system. Try again later." type="error" showIcon closable/>
-            ) : null}
-        </div>
+
+            <div className="col-md-8">
+                <h4>User List</h4>
+
+                <Link to={"/add_user"}>
+                    <Button type="primary" htmlType="button" icon={<PlusCircleTwoTone />}> Add User </Button>
+                </Link>
+
+                <ReactToPrint
+                    trigger={() => <Button type="default" htmlType="button"  > Print Report</Button>}
+                    content={() => componentRef.current}
+                />
+                <div ref={componentRef} >
+                    <Table rowKey={timesheet => timesheetList.id_time} columns={columns} dataSource={timesheetList}/>
+                    {error ? (
+                        <Alert message="Error in the system. Try again later." type="error" showIcon closable/>
+                    ) : null}
+
+                </div>
+            </div>
     )
 
 };

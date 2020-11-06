@@ -87,7 +87,7 @@ const EditTimeSheet = props => {
             initialValues: currentTimeSheet,
             fields: [
                 // { name: ['name', 'first'], label: 'First Name', required: true },
-                { key: 'id', label: 'ID', required: true },
+                { key: 'id_time', label: 'ID', required: true, disabled: true },
                 { key: 'timesheet_date', label: 'Date', required: true },
                 { key: 'monday', label: 'Monday', required: true },
                 { key: 'tuesday', label: 'Tuesday', required: true },
