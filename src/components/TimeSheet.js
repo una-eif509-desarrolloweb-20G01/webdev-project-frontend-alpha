@@ -31,22 +31,22 @@ const TimeSheet = (props) => {
     const [timesheetList, setTimeSheetList] = useState(initialTimeSheetListState);
     const [error, setError] = useState(false);
 
-    const [currentTimeSheet, setCurrentTimeSheet] = useState(null);
-    const [currentIndex, setCurrentIndex] = useState(-1);
-
-    /**
-     * React Hooks
-     * https://reactjs.org/docs/hooks-reference.html
-     */
+     const [currentTimeSheet, setCurrentTimeSheet] = useState(null);
+     const [currentIndex, setCurrentIndex] = useState(-1);
 
     useEffect(() => {
         getAllTimeSheetsMethod();
     },[]);
 
-    const [message, setMessage] = useState("");
-    const deleteNotification = type => {
-        notification[type]({
-            message: 'Delete successful'
+    const [messageType, setMessageType] = useState("");
+    const [messageDescription, setMessageDescription] = useState("");
+
+    // const [message, setMessage] = useState("");
+    const openNotification = (msg, typ, desc) => {
+        notification.open({
+            message: msg,
+            type: typ,
+            description: desc
         });
     };
 
@@ -72,14 +72,33 @@ const TimeSheet = (props) => {
             .then(response => {
                 console.log(response.data);
                 console.log("se ejecuto bien");
-                setMessage("The TimeSheet was deleted successfully!");
-                deleteNotification('success');
+                openNotification(
+                    "Delete Successful!",
+                    "success",
+                    "The TimeSheet was deleted successfully."
+                );
+                refreshList();
             })
             .catch(e => {
                 console.log("no se ejecuto bien");
-                setMessage("The TimeSheet was not deleted successfully!");
+                openNotification(
+                    "Delete Unsuccessful!",
+                    "error",
+                    "The TimeSheet was not deleted."
+                );
                 console.log(e);
             });
+    };
+
+    const refreshList = () => {
+        getAllTimeSheetsMethod();
+        setCurrentTimeSheet(null);
+        setCurrentIndex(-1);
+    };
+
+    const setActiveTimeSheet = (timesheet, index) => {
+        setCurrentTimeSheet(timesheet);
+        setCurrentIndex(index);
     };
 
 
@@ -148,10 +167,6 @@ const TimeSheet = (props) => {
             render:  (timesheet) => <a href={"/edit_timesheet/"+timesheet.id_time}>Editar</a>,
 
         },
-        // {
-        //     title: 'Delete',
-        //     //render:  (timesheet) => <button onClick={deleteTimeSheet(timesheet.id_time)}>Delete</button> ,
-        // },
         {
             title: 'Delete',
             render: (timesheet) =>
@@ -161,25 +176,14 @@ const TimeSheet = (props) => {
         }
     ];
 
-    const refreshList = () => {
-        getAllTimeSheetsMethod();
-        setCurrentTimeSheet(null);
-        setCurrentIndex(-1);
-    };
-
-    const setActiveTimeSheet = (timesheet, index) => {
-        setCurrentTimeSheet(timesheet);
-        setCurrentIndex(index);
-    };
-
     const componentRef = useRef();
     return (
 
             <div className="col-md-8">
                 <h4>TimeSheet List</h4>
 
-                <Link to={"/add_user"}>
-                    <Button type="primary" htmlType="button" icon={<PlusCircleTwoTone />}> Add User </Button>
+                <Link to={"/add_timesheet"}>
+                    <Button type="primary" htmlType="button" icon={<PlusCircleTwoTone />}> Add TimeSheet </Button>
                 </Link>
 
                 <ReactToPrint

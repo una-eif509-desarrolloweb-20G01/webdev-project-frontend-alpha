@@ -37,15 +37,16 @@ const User = (props) => {
         getAllUserMethod();
     },[]);
 
-/** Notification */
-const [message, setMessage] = useState("");
-const openNotification = () => {
-    notification.open({
-      message: 'Notification',
-      description: message,
+    /** Notification */
+    // const [message, setMessage] = useState("");
+    const openNotification = (msg, typ, desc) => {
+        notification.open({
+            message: msg,
+            type: typ,
+            description: desc
+        });
+    };
 
-    });
-  };
     /** Service methods **/
     const getAllUserMethod = () => {
         UserService.getAll()
@@ -64,33 +65,32 @@ const openNotification = () => {
     }
     /** Handle actions in the Table **/
 
+   const [requiredMark, setRequiredMarkType] = useState('optional');
 
-  
-    const [requiredMark, setRequiredMarkType] = useState('optional');
-
-    const deleteNotification = type => {
-        notification[type]({
-            message: 'Delete successful'
-        });
-    };
-    const deleteUser = (userRemoval) => {
-
+   const deleteUser = (userRemoval) => {
         UserService.remove(userRemoval)
             .then(response => {
                 console.log(response.data);
                 console.log("se ejecuto bien");
-                setMessage("The User was deleted successfully!");
-                deleteNotification('success');
+                openNotification(
+                    "Delete Successful!",
+                    "success",
+                    "The User was deleted successfully."
+                );
+                refreshList();
             })
             .catch(e => {
                 console.log("no se ejecuto bien");
-                deleteNotification('error')
+                openNotification(
+                    "Delete Unsuccessful!",
+                    "error",
+                    "The User was deleted successfully."
+                );
                 console.log(e);
             });
     };
 
- 
-   
+
     const [state, setState] = useState(false);
     const  showModal = () => {
     setState({

@@ -17,8 +17,8 @@ const Department = (props) => {
     const [departmentList, setDepartmentList] = useState(initialDepartmentListState);
     const [error, setError] = useState(false);
 
-    const [currentDepartment, setCurrentDepartment] = useState(null);
-    const [currentIndex, setCurrentIndex] = useState(-1);
+     const [currentDepartment, setCurrentDepartment] = useState(null);
+     const [currentIndex, setCurrentIndex] = useState(-1);
 
     /**
      * React Hooks
@@ -29,15 +29,15 @@ const Department = (props) => {
         getAllDepartmentsMethod();
     },[]);
 
-    /** Notification */
-    const [message, setMessage] = useState("");
-    const openNotification = () => {
+    // const [message, setMessage] = useState("");
+    const openNotification = (msg, typ, desc) => {
         notification.open({
-            message: 'Notification',
-            description: message,
-
+            message: msg,
+            type: typ,
+            description: desc
         });
     };
+
     /** Service methods **/
     const getAllDepartmentsMethod = () => {
         DepartmentService.getAll()
@@ -56,11 +56,7 @@ const Department = (props) => {
             });
     }
 
-    const deleteNotification = type => {
-        notification[type]({
-            message: 'Delete successful'
-        });
-    };
+
     /** Handle actions in the Form **/
     const deleteDepartment= (departmentRemoval) => {
 
@@ -68,12 +64,20 @@ const Department = (props) => {
             .then(response => {
                 console.log(response.data);
                 console.log("se ejecuto bien");
-                setMessage("The Department was deleted successfully!");
-                deleteNotification('success');
+                openNotification(
+                    "Delete Successful!",
+                    "success",
+                    "The Department was deleted successfully."
+                );
+                refreshList();
             })
             .catch(e => {
                 console.log("no se ejecuto bien");
-                deleteNotification('error')
+                openNotification(
+                    "Delete Unsuccessful!",
+                    "error",
+                    "The Department was not deleted."
+                );
                 console.log(e);
             });
     };
