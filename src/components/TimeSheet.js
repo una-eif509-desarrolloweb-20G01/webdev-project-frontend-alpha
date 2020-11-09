@@ -1,5 +1,5 @@
 import React, {useState, useEffect,useRef} from "react";
-import {Alert, Button, notification, Table} from 'antd';
+import {Alert, Button, notification, Table, Popconfirm} from 'antd';
 
 import TimeSheetService from "../services/timesheet.service";
 import {Link} from "react-router-dom";
@@ -44,11 +44,9 @@ const TimeSheet = (props) => {
     },[]);
 
     const [message, setMessage] = useState("");
-    const openNotification = () => {
-        notification.open({
-            message: 'Notification',
-            description: message,
-
+    const deleteNotification = type => {
+        notification[type]({
+            message: 'Delete successful'
         });
     };
 
@@ -70,20 +68,20 @@ const TimeSheet = (props) => {
     }
 
     const deleteTimeSheet= (timesheetRemoval) => {
-
-        DepartmentService.remove(timesheetRemoval)
+        TimeSheetService.remove(timesheetRemoval)
             .then(response => {
                 console.log(response.data);
                 console.log("se ejecuto bien");
-                setMessage("The Department was deleted successfully!");
-                openNotification();
+                setMessage("The TimeSheet was deleted successfully!");
+                deleteNotification('success');
             })
             .catch(e => {
                 console.log("no se ejecuto bien");
-                setMessage("The Department was not deleted successfully!");
+                setMessage("The TimeSheet was not deleted successfully!");
                 console.log(e);
             });
     };
+
 
     /** Handle actions in the Form **/
 
@@ -150,10 +148,16 @@ const TimeSheet = (props) => {
             render:  (timesheet) => <a href={"/edit_timesheet/"+timesheet.id_time}>Editar</a>,
 
         },
+        // {
+        //     title: 'Delete',
+        //     //render:  (timesheet) => <button onClick={deleteTimeSheet(timesheet.id_time)}>Delete</button> ,
+        // },
         {
             title: 'Delete',
-            //render:  (timesheet) => <DeleteTwoTone onClick={deleteTimeSheet(timesheet.id_time)} /> ,
-
+            render: (timesheet) =>
+                <Popconfirm title="Sure to delete?" onConfirm={() => deleteTimeSheet(timesheet.id_time)}>
+                    <a>Delete</a>
+                </Popconfirm>
 
         }
     ];
