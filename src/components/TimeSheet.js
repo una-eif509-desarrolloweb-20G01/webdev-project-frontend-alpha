@@ -158,7 +158,6 @@ const TimeSheet = (props) => {
                 <Popconfirm title="Sure to delete?" onConfirm={() => deleteTimeSheet(timesheet.id_time)}>
                     <a>Delete</a>
                 </Popconfirm>
-
         }
     ];
 

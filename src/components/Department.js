@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Alert, Button, notification, Table} from 'antd';
+import {Alert, Button, notification, Popconfirm, Table} from 'antd';
 
 import DepartmentService from "../services/department.service";
 import {Link} from "react-router-dom";
@@ -56,6 +56,11 @@ const Department = (props) => {
             });
     }
 
+    const deleteNotification = type => {
+        notification[type]({
+            message: 'Delete successful'
+        });
+    };
     /** Handle actions in the Form **/
     const deleteDepartment= (departmentRemoval) => {
 
@@ -64,11 +69,11 @@ const Department = (props) => {
                 console.log(response.data);
                 console.log("se ejecuto bien");
                 setMessage("The Department was deleted successfully!");
-                openNotification();
+                deleteNotification('success');
             })
             .catch(e => {
                 console.log("no se ejecuto bien");
-                setMessage("The Department was not deleted successfully!");
+                deleteNotification('error')
                 console.log(e);
             });
     };
@@ -90,11 +95,18 @@ const Department = (props) => {
         render:  (department) => <a href={"/edit_department/"+department.id_department}> <EditTwoTone /></a>,
  
       },
+        // {
+        //     title: 'Delete',
+        //     render:  (department) => <DeleteTwoTone onClick={deleteDepartment(department.id_department)} /> ,
+        //     //render:  (user) => <button onClick={showModal}> Delete </button>,
+        //
+        // }
         {
             title: 'Delete',
-            render:  (department) => <DeleteTwoTone onClick={deleteDepartment(department.id_department)} /> ,
-            //render:  (user) => <button onClick={showModal}> Delete </button>,
-
+            render: (department) =>
+                <Popconfirm title="Sure to delete?" onConfirm={() => deleteDepartment(department.id_department)}>
+                    <a>Delete</a>
+                </Popconfirm>
         }
     ];
 

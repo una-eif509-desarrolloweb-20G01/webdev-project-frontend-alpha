@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback,useRef} from "react";
-import Select, {Form, Input, Button,Table, Alert, Modal,notification} from 'antd';
+import Select, {Form, Input, Button, Table, Alert, Modal, notification, Popconfirm} from 'antd';
 
 import UserService from "../services/user.service";
 import {Link} from "react-router-dom";
@@ -68,7 +68,11 @@ const openNotification = () => {
   
     const [requiredMark, setRequiredMarkType] = useState('optional');
 
-
+    const deleteNotification = type => {
+        notification[type]({
+            message: 'Delete successful'
+        });
+    };
     const deleteUser = (userRemoval) => {
 
         UserService.remove(userRemoval)
@@ -76,11 +80,11 @@ const openNotification = () => {
                 console.log(response.data);
                 console.log("se ejecuto bien");
                 setMessage("The User was deleted successfully!");
-                openNotification();
+                deleteNotification('success');
             })
             .catch(e => {
                 console.log("no se ejecuto bien");
-                setMessage("The User was not deleted successfully!");
+                deleteNotification('error')
                 console.log(e);
             });
     };
@@ -108,6 +112,8 @@ const openNotification = () => {
       visible: false,
     });
   };
+
+
   
 /** End handle actions in the table */
     const columns = [
@@ -136,12 +142,19 @@ const openNotification = () => {
             render:  (user) => <a href={"/edit_user/"+user.id_user}>Edit</a>,
      
         },
+        // {
+        //     title: 'Delete',
+        //    render:  (user) => <button onClick={deleteUser(user.id_user)}> Delete </button>,
+        //  // render:  (user) => <button danger type="link"> Delete </button>,
+        //   //render:  (user) => <button onClick={showModal}> Delete </button>,
+        //
+        // }
         {
             title: 'Delete',
-           render:  (user) => <button onClick={deleteUser(user.id_user)}> Delete </button>,
-         // render:  (user) => <button danger type="link"> Delete </button>,
-          //render:  (user) => <button onClick={showModal}> Delete </button>,
-     
+            render: (user) =>
+                <Popconfirm title="Sure to delete?" onConfirm={() => deleteUser(user.id_user)}>
+                    <a>Delete</a>
+                </Popconfirm>
         }
     ];
      /** Handle actions in the Form **/
