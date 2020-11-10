@@ -142,13 +142,6 @@ const User = (props) => {
             render:  (user) => <a href={"/edit_user/"+user.id_user}>Edit</a>,
      
         },
-        // {
-        //     title: 'Delete',
-        //    render:  (user) => <button onClick={deleteUser(user.id_user)}> Delete </button>,
-        //  // render:  (user) => <button danger type="link"> Delete </button>,
-        //   //render:  (user) => <button onClick={showModal}> Delete </button>,
-        //
-        // }
         {
             title: 'Delete',
             render: (user) =>
@@ -171,39 +164,33 @@ const User = (props) => {
         setCurrentIndex(index);
     };
     const componentRef = useRef();
+
     return (
-    
-
         <div className="list row">
-  
         <div className="col-md-6">
-        <h4>User List</h4>    
-        
+            <h4>User List</h4>
             <Link to={"/add_user"}>
-        <Button type="primary" htmlType="button" icon={<PlusCircleTwoTone />}> Add User </Button>
-        </Link> 
-
-        <ReactToPrint
-        trigger={() => <Button type="default" htmlType="button"  > Print Report</Button>}
-        content={() => componentRef.current}
-      />
-<div ref={componentRef} >
-    <Table rowKey={user => userList.id_user } columns={columns} dataSource={userList} size="small" 
-        
-    />
-   
-    </div></div>
-    <Modal
-          title="User Delete Confirm"
-          visible={state.visible}
-          onOk={handleOk}
-          onCancel={handleCancel}
-        >
-          <p>confirm User Delete</p>
-        </Modal>
-    </div>
-
-    
+                <Button type="primary" htmlType="button" icon={<PlusCircleTwoTone />}>
+                    Add User
+                </Button>
+            </Link>
+            <ReactToPrint
+                trigger={() => <Button type="default" htmlType="button"  > Print Report</Button>}
+                content={() => componentRef.current}
+            />
+            <div ref={componentRef} >
+                <Table rowKey={user => userList.id_user } columns={columns} dataSource={userList} size="small"/>
+            </div>
+        </div>
+            <Modal
+                title="User Delete Confirm"
+                visible={state.visible}
+                onOk={handleOk}
+                onCancel={handleCancel}
+            >
+                <p>confirm User Delete</p>
+            </Modal>
+        </div>
     )
 };
 

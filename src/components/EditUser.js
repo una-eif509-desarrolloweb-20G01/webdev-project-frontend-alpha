@@ -7,6 +7,7 @@ import DepartmentService from "../services/department.service";
 
 
 import ReactToPrint from "react-to-print";
+import {Link} from "react-router-dom";
 
 const EditUser = props => {
     const initialUserState = {
@@ -152,15 +153,17 @@ const EditUser = props => {
     const componentRef = useRef();
     /** ver que si queda dentro se encicla. */
     return (
-        
         <div>
-
-    <ReactToPrint
-        trigger={() => <button>Print Report</button>}
-        content={() => componentRef.current}
-      />
-      
-      <div ref={componentRef} ><Form layout="horizontal" form={form} onFinish={handleFinish} style={{ width: '800px' }}>
+            <Link to={"/user"}>
+                <Button type="primary" htmlType="button">
+                    Back
+                </Button>
+            </Link>
+            <ReactToPrint
+                trigger={() => <Button>Print Report</Button>}
+                content={() => componentRef.current}
+            />
+            <div ref={componentRef} ><Form layout="horizontal" form={form} onFinish={handleFinish} style={{ width: '800px' }}>
                 <h1 style={{ height: '40px', fontSize: '16px', marginTop: '50px', color: '#888' }}>
                     User Infomation
                     {viewMode && (

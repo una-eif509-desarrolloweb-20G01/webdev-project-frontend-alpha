@@ -16,6 +16,7 @@ import Signup from "./components/Signup";
 import User from "./components/User";
 import EditUser from "./components/EditUser";
 import AddUser from "./components/AddUser";
+import AddTimeSheet from "./components/AddTimeSheet";
 function App() {
 
     
@@ -95,6 +96,7 @@ function App() {
             <Route exact path="/department" component={Department}/>
             <Route exact path="/timesheet" component={TimeSheet}/>
             <Route exact path="/edit_timesheet/:id" component={EditTimeSheet}/>
+            <Route exact path="/add_timesheet" component={AddTimeSheet}/>
             <Route exact path="/add_department" component={AddDepartment}/>
             <Route exact path="/edit_department/:id" component={EditDepartment}/>
             <Route exact path="/user" component={User}/>

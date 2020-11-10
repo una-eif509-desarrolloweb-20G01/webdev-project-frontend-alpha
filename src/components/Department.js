@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import {Alert, Button, notification, Popconfirm, Table} from 'antd';
 
 import DepartmentService from "../services/department.service";
 import {Link} from "react-router-dom";
 import Login from "./Login";
 import { EditTwoTone,DeleteTwoTone,PlusCircleTwoTone } from '@ant-design/icons';
+import ReactToPrint from "react-to-print";
 
 const initialDepartmentListState = [
     {
@@ -99,12 +100,6 @@ const Department = (props) => {
         render:  (department) => <a href={"/edit_department/"+department.id_department}> <EditTwoTone /></a>,
  
       },
-        // {
-        //     title: 'Delete',
-        //     render:  (department) => <DeleteTwoTone onClick={deleteDepartment(department.id_department)} /> ,
-        //     //render:  (user) => <button onClick={showModal}> Delete </button>,
-        //
-        // }
         {
             title: 'Delete',
             render: (department) =>
@@ -125,24 +120,25 @@ const Department = (props) => {
         setCurrentIndex(index);
     };
 
+    const componentRef = useRef();
     return (
-    
-
         <div className="list row">
-
-        <div className="col-md-6">
-        <h4>Department List</h4>        <Link to={"/add_department"}>
-        <Button type="primary" htmlType="button" icon={<PlusCircleTwoTone />}>
-        Add
-        </Button>
-        </Link>
-    <Table rowKey={user => departmentList.id_user } columns={columns} dataSource={departmentList} size="small" 
-        
-    />
-
-    </div>
-
-    </div>
+            <div className="col-md-6">
+            <h4>Department List</h4>
+                <Link to={"/add_department"}>
+                    <Button type="primary" htmlType="button" icon={<PlusCircleTwoTone />}>
+                        Add
+                    </Button>
+                </Link>
+                <ReactToPrint
+                    trigger={() => <Button type="default" htmlType="button"  > Print Report</Button>}
+                    content={() => componentRef.current}
+                />
+                <div ref={componentRef} >
+                    <Table rowKey={user => departmentList.id_user } columns={columns} dataSource={departmentList} size="small"/>
+                </div>
+            </div>
+        </div>
     )
 };
 

@@ -1,7 +1,9 @@
-import React, {useState, useEffect, useCallback} from "react";
+import React, {useState, useEffect, useCallback, useRef} from "react";
 import DepartmentService from "../services/department.service";
 import Select, {Form, Input, Button, Alert, Modal} from 'antd';
 import FormBuilder from "antd-form-builder";
+import {Link} from "react-router-dom";
+import ReactToPrint from "react-to-print";
 
 const EditDepartment = props => {
     const initialDepartmentState = {
@@ -121,36 +123,47 @@ const getMeta = () => {
  * Form
  */
 
-
+    const componentRef = useRef();
     return (
         <div>
-            <Form layout="horizontal" form={form} onFinish={handleFinish} style={{ width: '800px' }}>
-                <h1 style={{ height: '40px', fontSize: '16px', marginTop: '50px', color: '#888' }}>
-                    Department Information
-                    {viewMode && (
-                        <Button type="link" onClick={() => setViewMode(false)} style={{ float: 'right' }}>
-                            Edit
-                        </Button>
+            <Link to={"/department"}>
+                <Button type="primary" htmlType="button">
+                    Back
+                </Button>
+            </Link>
+            <ReactToPrint
+                trigger={() => <Button>Print Report</Button>}
+                content={() => componentRef.current}
+            />
+            <div ref={componentRef}>
+                <Form layout="horizontal" form={form} onFinish={handleFinish} style={{ width: '800px' }}>
+                    <h1 style={{ height: '40px', fontSize: '16px', marginTop: '50px', color: '#888' }}>
+                        Department Information
+                        {viewMode && (
+                            <Button type="link" onClick={() => setViewMode(false)} style={{ float: 'right' }}>
+                                Edit
+                            </Button>
+                        )}
+                    </h1>
+                    <FormBuilder form={form} getMeta={getMeta} viewMode={viewMode} />
+                    {!viewMode && (
+                        <Form.Item className="form-footer" wrapperCol={{ span: 16, offset: 4 }}>
+                            <Button htmlType="submit" type="primary" disabled={pending}>
+                                {pending ? 'Updating...' : 'Update'}
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    form.resetFields()
+                                    setViewMode(true)
+                                }}
+                                style={{ marginLeft: '15px' }}
+                            >
+                                Cancel
+                            </Button>
+                        </Form.Item>
                     )}
-                </h1>
-                <FormBuilder form={form} getMeta={getMeta} viewMode={viewMode} />
-                {!viewMode && (
-                    <Form.Item className="form-footer" wrapperCol={{ span: 16, offset: 4 }}>
-                        <Button htmlType="submit" type="primary" disabled={pending}>
-                            {pending ? 'Updating...' : 'Update'}
-                        </Button>
-                        <Button
-                            onClick={() => {
-                                form.resetFields()
-                                setViewMode(true)
-                            }}
-                            style={{ marginLeft: '15px' }}
-                        >
-                            Cancel
-                        </Button>
-                    </Form.Item>
-                )}
-            </Form>
+                </Form>
+            </div>
         </div>
     );
 };
