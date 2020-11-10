@@ -137,8 +137,8 @@ const AddTimeSheet = (props) => {
                     />
                 </Form.Item>
                 <Form.Item
-                    name="firstname"
-                    label="Name"
+                    name="timesheet_date"
+                    label="Date"
                     rules={[
                         {
                             required: true,
@@ -146,15 +146,15 @@ const AddTimeSheet = (props) => {
                     ]}
                 >
                     <Input
-                        name="firstname"
+                        name="timesheet_date"
                         onChange={handleInputChange}
-                        placeholder="Name"
+                        placeholder="Date"
                      />
                  </Form.Item>
 
                  <Form.Item
-                    name="lastname"
-                    label="lastname"
+                    name="monday"
+                    label="Monday"
                     rules={[
                         {
                             required: true,
@@ -162,15 +162,15 @@ const AddTimeSheet = (props) => {
                     ]}
                 >
                     <Input
-                        name="lastname"
+                        name="monday"
                         onChange={handleInputChange}
-                        placeholder="last name"
+                        placeholder="monday"
                      />
                  </Form.Item>
 
                  <Form.Item
-                    name="TimeSheet name"
-                    label="timesheetname"
+                    name="tuesday"
+                    label="Tuesday"
                     rules={[
                         {
                             required: true,
@@ -178,15 +178,15 @@ const AddTimeSheet = (props) => {
                     ]}
                 >
                     <Input
-                        name="timesheetname"
+                        name="tuesday"
                         onChange={handleInputChange}
-                        placeholder="TimeSheet Name"
+                        placeholder="Tuesday"
                      />
                  </Form.Item>
 
                  <Form.Item
-                    name="password"
-                    label="password"
+                    name="wednesday"
+                    label="Wednesday"
                     rules={[
                         {
                             required: true,
@@ -195,15 +195,15 @@ const AddTimeSheet = (props) => {
                     ]}
                 >
                     <Input
-                        name="password"
+                        name="wednesday"
                         onChange={handleInputChange}
-                        placeholder="password"
+                        placeholder="wednesday"
                      />
                  </Form.Item>
 
                  <Form.Item
-                    name="email"
-                    label="email"
+                    name="thrusday"
+                    label="Thrusday"
                     rules={[
                         {
                             required: true,
@@ -211,11 +211,139 @@ const AddTimeSheet = (props) => {
                     ]}
                 >
                     <Input
-                        name="email"
+                        name="thrusday"
                         onChange={handleInputChange}
-                        placeholder="email"
+                        placeholder="thrusday"
                      />
                  </Form.Item>
+
+                <Form.Item
+                    name="friday"
+                    label="Friday"
+                    rules={[
+                        {
+                            required: true,
+                        },
+                    ]}
+                >
+                    <Input
+                        name="friday"
+                        onChange={handleInputChange}
+                        placeholder="friday"
+                    />
+                </Form.Item>
+
+                <Form.Item
+                    name="saturday"
+                    label="Saturday"
+                    rules={[
+                        {
+                            required: true,
+                        },
+                    ]}
+                >
+                    <Input
+                        name="saturday"
+                        onChange={handleInputChange}
+                        placeholder="saturday"
+                    />
+                </Form.Item>
+
+                <Form.Item
+                    name="sunday"
+                    label="Sunday"
+                    rules={[
+                        {
+                            required: true,
+                        },
+                    ]}
+                >
+                    <Input
+                        name="sunday"
+                        onChange={handleInputChange}
+                        placeholder="sunday"
+                    />
+                </Form.Item>
+
+                <Form.Item
+                    name="pay"
+                    label="Pay"
+                    rules={[
+                        {
+                            required: true,
+                        },
+                    ]}
+                >
+                    <Input
+                        name="pay"
+                        onChange={handleInputChange}
+                        placeholder="pay"
+                    />
+                </Form.Item>
+
+                <Form.Item
+                    name="id_user"
+                    label="User"
+                    rules={[
+                        {
+                            required: true,
+                        },
+                    ]}
+                >
+                    <Input
+                        name="id_user"
+                        onChange={handleInputChange}
+                        placeholder="user"
+                    />
+                </Form.Item>
+
+                <Form.Item
+                    name="approved"
+                    label="Approved"
+                    rules={[
+                        {
+                            required: true,
+                        },
+                    ]}
+                >
+                    <Input
+                        name="approved"
+                        onChange={handleInputChange}
+                        placeholder="approved"
+                    />
+                </Form.Item>
+
+                <Form.Item
+                    name="payed"
+                    label="Payed"
+                    rules={[
+                        {
+                            required: true,
+                        },
+                    ]}
+                >
+                    <Input
+                        name="payed"
+                        onChange={handleInputChange}
+                        placeholder="payed"
+                    />
+                </Form.Item>
+
+                <Form.Item
+                    name="id_department"
+                    label="Department"
+                    rules={[
+                        {
+                            required: true,
+                        },
+                    ]}
+                >
+                    <Input
+                        name="id_department"
+                        onChange={handleInputChange}
+                        placeholder="Department"
+                    />
+                </Form.Item>
 
                 <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit">
