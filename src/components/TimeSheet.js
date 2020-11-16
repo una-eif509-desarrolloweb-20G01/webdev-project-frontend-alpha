@@ -3,7 +3,6 @@ import {Alert, Button, notification, Table, Popconfirm} from 'antd';
 
 import TimeSheetService from "../services/timesheet.service";
 import {Link} from "react-router-dom";
-import DepartmentService from "../services/timesheet.service";
 import { EditTwoTone,DeleteTwoTone,PlusCircleTwoTone } from '@ant-design/icons';
 import ReactToPrint from "react-to-print";
 
@@ -38,10 +37,6 @@ const TimeSheet = (props) => {
         getAllTimeSheetsMethod();
     },[]);
 
-    const [messageType, setMessageType] = useState("");
-    const [messageDescription, setMessageDescription] = useState("");
-
-    // const [message, setMessage] = useState("");
     const openNotification = (msg, typ, desc) => {
         notification.open({
             message: msg,
@@ -95,12 +90,6 @@ const TimeSheet = (props) => {
         setCurrentTimeSheet(null);
         setCurrentIndex(-1);
     };
-
-    const setActiveTimeSheet = (timesheet, index) => {
-        setCurrentTimeSheet(timesheet);
-        setCurrentIndex(index);
-    };
-
 
     /** Handle actions in the Form **/
 

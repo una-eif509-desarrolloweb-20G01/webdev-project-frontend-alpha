@@ -214,8 +214,8 @@ const AddTimeSheet = (props) => {
                  </Form.Item>
 
                  <Form.Item
-                    name="thrusday"
-                    label="Thrusday"
+                    name="thursday"
+                    label="Thursday"
                     rules={[
                         {
                             required: true,
@@ -223,9 +223,9 @@ const AddTimeSheet = (props) => {
                     ]}
                 >
                     <Input
-                        name="thrusday"
+                        name="thursday"
                         onChange={handleInputChange}
-                        placeholder="thrusday"
+                        placeholder="thursday"
                      />
                  </Form.Item>
 
