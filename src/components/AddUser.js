@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import UserService from "../services/user.service";
-import {Form, Input, Button, Alert} from 'antd';
+import {Form, Input, Button, Alert, notification} from 'antd';
 import {Link} from "react-router-dom";
 import {  } from '@ant-design/icons';
 
@@ -24,44 +24,48 @@ const tailLayout = {
 const AddUser = (props) => {
     const initialUserState = {
         id_user: null,
-        first_name: "",
-        last_name: "",       
-        email: "",
+        firstname: "",
+        lastname: "",       
         username: "",
-        password: ""
+        password: "",
+        email: ""
     };
     const [form] = Form.useForm();
     const [user, setUser] = useState(initialUserState);
-    const [error, setError, submitted, setSubmitted] = useState(false);
-
- 
+    const [submitted, setSubmitted] = useState(false);
+    const [error, setError] = useState(false);
 
     const handleInputChange = event => {
         let { name, value } = event.target;
         setUser({ ...user, [name]: value });
     };
-
-
-
+    
     const saveUser = () => {
         var data = {
             id_user: user.id_user,
-            first_name: user.first_name,
-            last_name: user.last_name,
+            firstname: user.firstname,
+            lastname: user.lastname,
             username: user.username,
-            password: user.password
+            password: user.password,
+            email: user.email
         };
 
         UserService.create(data)
             .then(response => {
                 setUser({
                     id_user: response.data.id_user,
-                    first_name: response.data.first_name,
-                    last_name: response.data.last_name,
+                    firstname: response.data.firstname,
+                    lastname: response.data.lastname,
                     username: response.data.username,
-                    password: response.data.password
+                    password: response.data.password,
+                    email: response.data.email
                 });
                 setSubmitted(true);
+                openNotification(
+                    "Create Successful!",
+                    "success",
+                    "The User was created successfully!"
+                );
                 console.log(response.data);
             })
             .catch(err => {
@@ -80,6 +84,14 @@ const AddUser = (props) => {
     const onFinish = data => {
         console.log(user);
         saveUser();
+    };
+
+    const openNotification = (msg, typ, desc) => {
+        notification.open({
+            message: msg,
+            type: typ,
+            description: desc
+        });
     };
 
     const onReset = () => {
@@ -138,12 +150,12 @@ const AddUser = (props) => {
                     <Input
                         name="lastname"
                         onChange={handleInputChange}
-                        placeholder="last name"
+                        placeholder="lastname"
                      />
                  </Form.Item>
 
                  <Form.Item
-                    name="User name"
+                    name="username"
                     label="username"
                     rules={[
                         {
