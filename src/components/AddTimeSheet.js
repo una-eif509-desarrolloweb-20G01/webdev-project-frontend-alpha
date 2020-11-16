@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import TimeSheetService from "../services/timesheet.service";
 import {Form, Input, Button, Alert, notification} from 'antd';
 import {Link} from "react-router-dom";
-import {  } from '@ant-design/icons';
+import {ClearOutlined, LeftCircleTwoTone, PlusCircleTwoTone} from '@ant-design/icons';
 
 const layout = {
     labelCol: {
@@ -126,7 +126,7 @@ const AddTimeSheet = (props) => {
     return (
         <div>
         <Link to={"/timesheet"}>
-            <Button type="primary" htmlType="button">
+            <Button type="primary" htmlType="button" icon={<LeftCircleTwoTone />}>
                 Back
             </Button>
         </Link>
@@ -358,10 +358,10 @@ const AddTimeSheet = (props) => {
                 </Form.Item>
 
                 <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" icon={<PlusCircleTwoTone />} >
                         Add
                     </Button>
-                    <Button htmlType="button" onClick={onReset}>
+                    <Button htmlType="button" onClick={onReset} icon={<ClearOutlined />}>
                         Reset
                     </Button>
                 </Form.Item>

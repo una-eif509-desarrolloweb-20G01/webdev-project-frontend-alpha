@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import DepartmentService from "../services/department.service";
 import {Form, Input, Button, Alert, notification} from 'antd';
 import {Link} from "react-router-dom";
-import {LeftCircleTwoTone, PlusCircleTwoTone} from '@ant-design/icons';
+import {LeftCircleTwoTone, PlusCircleTwoTone, ClearOutlined} from '@ant-design/icons';
 
 const layout = {
     labelCol: {
@@ -129,10 +129,10 @@ const AddDepartment = (props) => {
                  </Form.Item>
 
                 <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" icon={<PlusCircleTwoTone />}>
                         Add
                     </Button>
-                    <Button htmlType="button" onClick={onReset}>
+                    <Button htmlType="button" onClick={onReset} icon={<ClearOutlined />}>
                         Reset
                     </Button>
                 </Form.Item>

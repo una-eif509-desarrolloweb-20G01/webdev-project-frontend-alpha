@@ -4,6 +4,7 @@ import Select, {Form, Input, Button, Alert, Modal, notification} from 'antd';
 import FormBuilder from "antd-form-builder";
 import {Link} from "react-router-dom";
 import ReactToPrint from "react-to-print";
+import {EditTwoTone, LeftCircleTwoTone, PrinterOutlined} from "@ant-design/icons";
 
 const EditDepartment = props => {
     const initialDepartmentState = {
@@ -104,12 +105,12 @@ const EditDepartment = props => {
     return (
         <div>
             <Link to={"/department"}>
-                <Button type="primary" htmlType="button">
+                <Button type="primary" htmlType="button" icon={<LeftCircleTwoTone />}>
                     Back
                 </Button>
             </Link>
             <ReactToPrint
-                trigger={() => <Button>Print Report</Button>}
+                trigger={() => <Button icon={<PrinterOutlined />}>Print Report</Button>}
                 content={() => componentRef.current}
             />
             <div ref={componentRef}>
@@ -118,7 +119,7 @@ const EditDepartment = props => {
                         Department Information
                         {viewMode && (
                             <Button type="link" onClick={() => setViewMode(false)} style={{ float: 'right' }}>
-                                Edit
+                                <EditTwoTone />
                             </Button>
                         )}
                     </h1>

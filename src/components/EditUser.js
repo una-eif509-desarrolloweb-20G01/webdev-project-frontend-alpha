@@ -4,6 +4,7 @@ import FormBuilder from "antd-form-builder";
 import UserService from "../services/user.service";
 import ReactToPrint from "react-to-print";
 import {Link} from "react-router-dom";
+import {EditTwoTone, LeftCircleTwoTone, PrinterOutlined} from "@ant-design/icons";
 
 const EditUser = props => {
     const initialUserState = {
@@ -115,8 +116,9 @@ const EditUser = props => {
                 { key: 'firstname', label: 'First Name', required: true },
                 { key: 'lastname', label: 'Last Name', required: true },
                 { key: 'username', label: 'Username', required: true },
-                { key: 'password', label: 'Password', required: true },
-                { key: 'email', label: 'Email', required: true }
+                { key: 'email', label: 'Email', required: true },
+                { key: 'password', label: 'Password', required: true }
+
             ],
         }
         return meta
@@ -126,12 +128,12 @@ const EditUser = props => {
     return (
         <div>
             <Link to={"/user"}>
-                <Button type="primary" htmlType="button">
+                <Button type="primary" htmlType="button" icon={<LeftCircleTwoTone />}>
                     Back
                 </Button>
             </Link>
             <ReactToPrint
-                trigger={() => <Button>Print Report</Button>}
+                trigger={() => <Button icon={<PrinterOutlined />}>Print Report</Button>}
                 content={() => componentRef.current}
             />
             <div ref={componentRef} ><Form layout="horizontal" form={form} onChange={handleInputChange} onFinish={handleFinish} style={{ width: '800px' }}>
@@ -139,7 +141,7 @@ const EditUser = props => {
                     User Infomation
                     {viewMode && (
                         <Button type="link" onClick={() => setViewMode(false)} style={{ float: 'right' }}>
-                            Edit
+                            <EditTwoTone />
                         </Button>
                     )}
                 </h1>
