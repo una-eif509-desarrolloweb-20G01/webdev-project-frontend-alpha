@@ -52,16 +52,6 @@ const EditDepartment = props => {
             });
     };
 
-    const deleteDepartment = () => {
-        DepartmentService.remove(currentDepartment.id_department)
-            .then(response => {
-                console.log(response.data);
-
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    };
     const openNotification = (msg, typ, desc) => {
         notification.open({
             message: msg,
@@ -97,7 +87,7 @@ const EditDepartment = props => {
             disabled: pending,
             initialValues: currentDepartment,
             fields: [
-                { key: 'id_department', label: 'ID', required: true },
+                { key: 'id_department', label: 'ID', required: true, disabled: true },
                 { key: 'department_name', label: 'Name', required: true },
             ],
         }

@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useCallback, useRef } from "react";
-import Select, {Form, Input, Button, Alert, Modal} from 'antd';
+import Select, {Form, Input, Button, Alert, Modal, notification} from 'antd';
 import FormBuilder from "antd-form-builder";
 import UserService from "../services/user.service";
-import DepartmentService from "../services/department.service";
 import ReactToPrint from "react-to-print";
 import {Link} from "react-router-dom";
 
@@ -15,41 +14,15 @@ const EditUser = props => {
         password: "",
         email: ""
     };
-    const initialDepartmentListState = [
-        {
-            "id_department": 0,
-            "department_name": ""
-        }
-    ];
 
-/**
- * Esto es del departamento..
- */
-    
-    const [departmentList, setDepartmentList] = useState(initialDepartmentListState);
-    // const { Option } = Select;
     const [currentUser, setcurrentUser] = useState(initialUserState);
-
     const [viewMode, setViewMode] = useState(true)
     const [pending, setPending] = useState(false)
-    const handleFinish = useCallback(values => {
-        console.log('Submit: ', values)
-        setPending(true)
-        setTimeout(() => {
-            setPending(false)
-            setcurrentUser(values)
-            setViewMode(true)
-            Modal.success({
-                title: 'Success',
-                content: 'Infomation updated.',
-            })
-        }, 1500)
-    })
-    const [message, setMessage] = useState("");
-
-    const [error, setError, submitted, setSubmitted] = useState(false);
-
-    const [requiredMark, setRequiredMarkType] = useState('optional');
+    const [user, setUser] = useState(initialUserState);
+    const [form] = Form.useForm();
+    useEffect(() => {
+        getUser(props.match.params.id);
+    }, [props.match.params.id]);
 
     const layout = {
         labelCol: {
@@ -79,31 +52,58 @@ const EditUser = props => {
             });
     };
 
-    const getAllDepartmentsMethod = () => {
-        DepartmentService.getAll()
+    const updateUser = () => {
+        var data = {
+            id_user: user.id_user,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            username: user.username,
+            password: user.password,
+            email: user.email
+        };
+        // console.log("Data:", data);
+        UserService.update(data)
             .then(response => {
-                setDepartmentList(response.data);
                 console.log(response.data);
+                openNotification(
+                    "Update Successful!",
+                    "success",
+                    "The User was updated successfully!"
+                );
             })
-            .catch(err => {
-                console.log(err);
-                setError(err)
-                if (err.response.status === 401) {
-
-                    window.location.reload();
-                }
+            .catch(e => {
+                console.log(e);
             });
-    }
-    
-    const [form] = Form.useForm();
-    useEffect(() => {
-        getUser(props.match.params.id);
-    }, [props.match.params.id]);
+    };
+
+    const openNotification = (msg, typ, desc) => {
+        notification.open({
+            message: msg,
+            type: typ,
+            description: desc
+        });
+    };
+
+    const handleFinish = useCallback(values => {
+        console.log('Submit: ', values)
+        setPending(true)
+        setTimeout(() => {
+            setPending(false)
+            setcurrentUser(values)
+            setViewMode(true)
+            Modal.success({
+                title: 'Success',
+                content: 'Infomation updated.',
+            })
+        }, 1500)
+    })
 
     const handleInputChange = event => {
-        const { email, value } = event.target;
-        setcurrentUser({ ...currentUser, [email]: value });
+        let { name, value } = event.target;
+        setUser({ ...user, [name]: value });
+        setUser(form.getFieldsValue());
     };
+
 
     const getMeta = () => {
         const meta = {
@@ -111,45 +111,18 @@ const EditUser = props => {
             disabled: pending,
             initialValues: currentUser,
             fields: [
-                { key: 'id_user', label: 'ID', required: true },
-                { key: 'email', label: 'Email', required: true },
+                { key: 'id_user', label: 'ID', required: true, disabled: true },
                 { key: 'firstname', label: 'First Name', required: true },
                 { key: 'lastname', label: 'Last Name', required: true },
                 { key: 'username', label: 'Username', required: true },
-
+                { key: 'password', label: 'Password', required: true },
+                { key: 'email', label: 'Email', required: true }
             ],
         }
         return meta
     };
 
-
-    const onReset = () => {
-        form.resetFields();
-    };
-
-    const updateUser = () => {
-        UserService.update(currentUser.id_user, currentUser)
-            .then(response => {
-                console.log(response.data);
-                setMessage("The User was updated successfully!");
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    };
-
-    const deleteUser = () => {
-        UserService.remove(currentUser.id_user)
-            .then(response => {
-                console.log(response.data);
-
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    };
     const componentRef = useRef();
-    /** ver que si queda dentro se encicla. */
     return (
         <div>
             <Link to={"/user"}>
@@ -161,7 +134,7 @@ const EditUser = props => {
                 trigger={() => <Button>Print Report</Button>}
                 content={() => componentRef.current}
             />
-            <div ref={componentRef} ><Form layout="horizontal" form={form} onFinish={handleFinish} style={{ width: '800px' }}>
+            <div ref={componentRef} ><Form layout="horizontal" form={form} onChange={handleInputChange} onFinish={handleFinish} style={{ width: '800px' }}>
                 <h1 style={{ height: '40px', fontSize: '16px', marginTop: '50px', color: '#888' }}>
                     User Infomation
                     {viewMode && (
@@ -170,10 +143,20 @@ const EditUser = props => {
                         </Button>
                     )}
                 </h1>
-                <FormBuilder form={form} getMeta={getMeta} viewMode={viewMode} />
+                <FormBuilder form={form} getMeta={getMeta} onChange={handleInputChange} viewMode={viewMode} />
                 {!viewMode && (
                     <Form.Item className="form-footer" wrapperCol={{ span: 16, offset: 4 }}>
-                        <Button htmlType="submit" type="primary" disabled={pending}>
+                        <Button
+                            htmlType="submit"
+                            type="primary"
+                            disabled={pending}
+                            onClick={() => {
+                                setUser(form.getFieldsValue())
+                                console.log("update button, fields:", user)
+                                updateUser()
+                                setViewMode(true)
+                            }}
+                        >
                             {pending ? 'Updating...' : 'Update'}
                         </Button>
                         <Button

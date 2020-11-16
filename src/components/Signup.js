@@ -135,7 +135,7 @@ const Signup = (props) => {
                 { key: 'firstname', label: 'First Name', required: true },
                 { key: 'lastname', label: 'Last Name', required: true },
                 { key: 'username', label: 'Username', required: true },
-                { key: 'password', label: 'password', required: true },
+                { key: 'password', label: 'Password', required: true },
                
             ],
         }
