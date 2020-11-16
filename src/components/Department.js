@@ -4,7 +4,7 @@ import {Alert, Button, notification, Popconfirm, Table} from 'antd';
 import DepartmentService from "../services/department.service";
 import {Link} from "react-router-dom";
 import Login from "./Login";
-import { EditTwoTone,DeleteTwoTone,PlusCircleTwoTone } from '@ant-design/icons';
+import {EditTwoTone, DeleteTwoTone, PlusCircleTwoTone, PrinterOutlined, DeleteOutlined} from '@ant-design/icons';
 import ReactToPrint from "react-to-print";
 
 const initialDepartmentListState = [
@@ -104,7 +104,7 @@ const Department = (props) => {
             title: 'Delete',
             render: (department) =>
                 <Popconfirm title="Sure to delete?" onConfirm={() => deleteDepartment(department.id_department)}>
-                    <a>Delete</a>
+                    <a><DeleteOutlined /></a>
                 </Popconfirm>
         }
     ];
@@ -131,7 +131,7 @@ const Department = (props) => {
                     </Button>
                 </Link>
                 <ReactToPrint
-                    trigger={() => <Button type="default" htmlType="button"  > Print Report</Button>}
+                    trigger={() => <Button type="default" htmlType="button" icon={<PrinterOutlined />}  > Print Report</Button>}
                     content={() => componentRef.current}
                 />
                 <div ref={componentRef} >

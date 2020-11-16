@@ -8,7 +8,7 @@ import Login from "./Login";
 
 import ReactToPrint from "react-to-print";
 import FormBuilder from "antd-form-builder";
-import {PlusCircleTwoTone} from "@ant-design/icons";
+import {PlusCircleTwoTone,EditTwoTone,PrinterOutlined,DeleteOutlined } from "@ant-design/icons";
 
 const initialUserListState = [
     {
@@ -139,14 +139,15 @@ const User = (props) => {
         },
         {
             title: 'Edit',
-            render:  (user) => <a href={"/edit_user/"+user.id_user}>Edit</a>,
+            render:  (user) => <a href={"/edit_user/"+user.id_user}><EditTwoTone /></a>,
+
      
         },
         {
             title: 'Delete',
             render: (user) =>
-                <Popconfirm title="Sure to delete?" onConfirm={() => deleteUser(user.id_user)}>
-                    <a>Delete</a>
+                <Popconfirm title="Sure to delete?" onConfirm={() => deleteUser(user.id_user)} >
+                    <a><DeleteOutlined /></a>
                 </Popconfirm>
         }
     ];
@@ -175,7 +176,7 @@ const User = (props) => {
                 </Button>
             </Link>
             <ReactToPrint
-                trigger={() => <Button type="default" htmlType="button"  > Print Report</Button>}
+                trigger={() => <Button type="default" htmlType="button"  icon={<PrinterOutlined />} > Print Report</Button>}
                 content={() => componentRef.current}
             />
             <div ref={componentRef} >

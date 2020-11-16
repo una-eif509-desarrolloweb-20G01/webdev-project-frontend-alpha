@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import DepartmentService from "../services/department.service";
 import {Form, Input, Button, Alert, notification} from 'antd';
 import {Link} from "react-router-dom";
+import {LeftCircleTwoTone, PlusCircleTwoTone} from '@ant-design/icons';
 
 const layout = {
     labelCol: {
@@ -90,7 +91,7 @@ const AddDepartment = (props) => {
     return (
         <div>
         <Link to={"/department"}>
-            <Button type="primary" htmlType="button">
+            <Button type="primary" htmlType="button" icon={<LeftCircleTwoTone />} >
                 Back
             </Button>
         </Link>

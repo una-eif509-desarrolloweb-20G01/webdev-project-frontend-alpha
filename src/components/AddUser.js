@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import UserService from "../services/user.service";
 import {Form, Input, Button, Alert, notification} from 'antd';
 import {Link} from "react-router-dom";
-import {  } from '@ant-design/icons';
+import { LeftCircleTwoTone  } from '@ant-design/icons';
 
 const layout = {
     labelCol: {
@@ -100,7 +100,7 @@ const AddUser = (props) => {
     return (
         <div>
         <Link to={"/user"}>
-            <Button type="primary" htmlType="button">
+            <Button type="primary" htmlType="button" icon={<LeftCircleTwoTone />}>
                 Back
             </Button>
         </Link>

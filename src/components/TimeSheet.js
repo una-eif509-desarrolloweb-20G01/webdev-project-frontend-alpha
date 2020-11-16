@@ -3,7 +3,7 @@ import {Alert, Button, notification, Table, Popconfirm} from 'antd';
 
 import TimeSheetService from "../services/timesheet.service";
 import {Link} from "react-router-dom";
-import { EditTwoTone,DeleteTwoTone,PlusCircleTwoTone } from '@ant-design/icons';
+import {EditTwoTone, DeleteTwoTone, PlusCircleTwoTone, DeleteOutlined,PrinterOutlined} from '@ant-design/icons';
 import ReactToPrint from "react-to-print";
 
 
@@ -153,14 +153,14 @@ const TimeSheet = (props) => {
         },
         {
             title: 'Edit',
-            render:  (timesheet) => <a href={"/edit_timesheet/"+timesheet.id_time}>Editar</a>,
+            render:  (timesheet) => <a href={"/edit_timesheet/"+timesheet.id_time}><EditTwoTone /></a>,
 
         },
         {
             title: 'Delete',
             render: (timesheet) =>
                 <Popconfirm title="Sure to delete?" onConfirm={() => deleteTimeSheet(timesheet.id_time)}>
-                    <a>Delete</a>
+                    <a><DeleteOutlined /></a>
                 </Popconfirm>
         }
     ];
@@ -176,7 +176,7 @@ const TimeSheet = (props) => {
                 </Link>
 
                 <ReactToPrint
-                    trigger={() => <Button type="default" htmlType="button"  > Print Report</Button>}
+                    trigger={() => <Button type="default" htmlType="button" icon={<PrinterOutlined />} > Print Report</Button>}
                     content={() => componentRef.current}
                 />
                 <div ref={componentRef} >
