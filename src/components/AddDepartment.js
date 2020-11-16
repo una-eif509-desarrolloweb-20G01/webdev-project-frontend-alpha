@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import DepartmentService from "../services/department.service";
-import {Form, Input, Button, Alert} from 'antd';
+import {Form, Input, Button, Alert, notification} from 'antd';
 import {Link} from "react-router-dom";
 
 const layout = {
@@ -26,21 +26,14 @@ const AddDepartment = (props) => {
     };
     const [form] = Form.useForm();
     const [department, setDepartment] = useState(initialDepartmentState);
-    const [error, setError, submitted, setSubmitted] = useState(false);
-
-    /*
-    const [departmentList, setDepartmentList] = useState(initialDepartmentListState);
     const [error, setError] = useState(false);
-     */
+    const [submitted, setSubmitted] = useState(false);
 
     const handleInputChange = event => {
         let { name, value } = event.target;
         setDepartment({ ...department, [name]: value });
     };
 
-   /* useEffect(() => {
-        saveDepartment();
-    },);*/
 
     const saveDepartment = () => {
         var data = {
@@ -55,6 +48,11 @@ const AddDepartment = (props) => {
                     department_name: response.data.department_name
                 });
                 setSubmitted(true);
+                openNotification(
+                    "Create Successful!",
+                    "success",
+                    "The Department was created successfully!"
+                );
                 console.log(response.data);
             })
             .catch(err => {
@@ -76,6 +74,14 @@ const AddDepartment = (props) => {
     const onFinish = data => {
         console.log(department);
         saveDepartment();
+    };
+
+    const openNotification = (msg, typ, desc) => {
+        notification.open({
+            message: msg,
+            type: typ,
+            description: desc
+        });
     };
 
     const onReset = () => {
@@ -138,49 +144,6 @@ const AddDepartment = (props) => {
                 ) : null}
 
         </div>
-
-       /* <div className="submit-form">
-        {submitted ? (
-                <div>
-                <h4>You submitted successfully!</h4>
-                <button className="btn btn-success" onClick={newDepartment}>
-            Add
-            </button>
-            </div>
-) : (
-    <div>
-    <div className="form-group">
-        <label htmlFor="id_department">ID</label>
-        <input
-    type="text"
-    className="form-control"
-    id="title"
-    required
-    value={department.id_department}
-    onChange={handleInputChange}
-    name="id_department"
-        />
-        </div>
-
-        <div className="form-group">
-        <label htmlFor="department_name">Name</label>
-        <input
-    type="text"
-    className="form-control"
-    id="department_name"
-    required
-    value={department.department_name}
-    onChange={handleInputChange}
-    name="department_name"
-        />
-        </div>
-
-        <button onClick={saveDepartment} className="btn btn-success">
-        Submit
-        </button>
-        </div>
-)}
-</div>*/
     )
 };
 

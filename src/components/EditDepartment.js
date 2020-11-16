@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback, useRef} from "react";
 import DepartmentService from "../services/department.service";
-import Select, {Form, Input, Button, Alert, Modal} from 'antd';
+import Select, {Form, Input, Button, Alert, Modal, notification} from 'antd';
 import FormBuilder from "antd-form-builder";
 import {Link} from "react-router-dom";
 import ReactToPrint from "react-to-print";
@@ -12,10 +12,14 @@ const EditDepartment = props => {
     };
     const [currentDepartment, setCurrentDepartment] = useState(initialDepartmentState);
 
+    const [form] = Form.useForm();
+    useEffect(() => {
+        getDepartment(props.match.params.id);
+        }, [props.match.params.id]);
 
-    /**
-     * Methos for handle Service
-     */
+    const [viewMode, setViewMode] = useState(true)
+    const [pending, setPending] = useState(false)
+    const [department, setDepartment] = useState(initialDepartmentState);
 
     const getDepartment = id => {
         DepartmentService.get(id)
@@ -28,15 +32,20 @@ const EditDepartment = props => {
             });
     };
 
-    useEffect(() => {
-        getDepartment(props.match.params.id);
-    }, [props.match.params.id]);
-
     const updateDepartment = () => {
-        DepartmentService.update(currentDepartment.id_department, currentDepartment)
+        var data = {
+            id_department: department.id_department,
+            department_name: department.department_name
+        };
+        // console.log("Data:", data);
+        DepartmentService.update(data)
             .then(response => {
                 console.log(response.data);
-                setMessage("The department was updated successfully!");
+                openNotification(
+                    "Update Successful!",
+                    "success",
+                    "The Department was updated successfully!"
+                );
             })
             .catch(e => {
                 console.log(e);
@@ -52,76 +61,49 @@ const EditDepartment = props => {
             .catch(e => {
                 console.log(e);
             });
-    };      
-/**
- * Handle form change
- *
- */
-const [form] = Form.useForm();
-    useEffect(() => {
-        getDepartment(props.match.params.id);
-    }, [props.match.params.id]);
+    };
+    const openNotification = (msg, typ, desc) => {
+        notification.open({
+            message: msg,
+            type: typ,
+            description: desc
+        });
+    };
 
-const [viewMode, setViewMode] = useState(true)
-const [pending, setPending] = useState(false)
-const handleFinish = useCallback(values => {
-    console.log('Submit: ', values)
-    setPending(true)
-    setTimeout(() => {
-        setPending(false)
-        setCurrentDepartment(values)
-        setViewMode(true)
-        Modal.success({
-            title: 'Success',
-            content: 'Infomation updated.',
-        })
-    }, 1500)
-})
-const [message, setMessage] = useState("");
+    const handleFinish = useCallback(values => {
+        console.log('Submit: ', values)
+        setPending(true)
+        setTimeout(() => {
+            setPending(false)
+            setCurrentDepartment(values)
+            setViewMode(true)
+            Modal.success({
+                title: 'Success',
+                content: 'Infomation updated.',
+            })
+        }, 1500)
+    })
 
-const [error, setError, submitted, setSubmitted] = useState(false);
-
-const [requiredMark, setRequiredMarkType] = useState('optional');
-
-const layout = {
-    labelCol: {
-        span: 2,
-    },
-    wrapperCol: {
-        span: 3,
-    },
-};
-
-const tailLayout = {
-    wrapperCol: {
-        offset: 2,
-        span: 8,
-    },
-};
-
-const handleInputChange = event => {
-    const { name, value } = event.target;
-    setCurrentDepartment({ ...currentDepartment, [name]: value });
-};
+    const handleInputChange = event => {
+        let { name, value } = event.target;
+        setDepartment({ ...department, [name]: value });
+        setDepartment(form.getFieldsValue())
+    };
 
 
-const getMeta = () => {
-    const meta = {
-        columns: 2,
-        disabled: pending,
-        initialValues: currentDepartment,
-        fields: [
-            { key: 'id_department', label: 'ID', required: true },
-            { key: 'department_name', label: 'Name', required: true },
+    const getMeta = () => {
+        const meta = {
+            columns: 2,
+            disabled: pending,
+            initialValues: currentDepartment,
+            fields: [
+                { key: 'id_department', label: 'ID', required: true },
+                { key: 'department_name', label: 'Name', required: true },
+            ],
+        }
+        return meta
+    };
 
-
-        ],
-    }
-    return meta
-};
-/** 
- * Form
- */
 
     const componentRef = useRef();
     return (
@@ -136,7 +118,7 @@ const getMeta = () => {
                 content={() => componentRef.current}
             />
             <div ref={componentRef}>
-                <Form layout="horizontal" form={form} onFinish={handleFinish} style={{ width: '800px' }}>
+                <Form layout="horizontal" form={form} onChange={handleInputChange} onFinish={handleFinish} style={{ width: '800px' }}>
                     <h1 style={{ height: '40px', fontSize: '16px', marginTop: '50px', color: '#888' }}>
                         Department Information
                         {viewMode && (
@@ -145,10 +127,20 @@ const getMeta = () => {
                             </Button>
                         )}
                     </h1>
-                    <FormBuilder form={form} getMeta={getMeta} viewMode={viewMode} />
+                    <FormBuilder form={form} getMeta={getMeta} onChange={handleInputChange} viewMode={viewMode} />
                     {!viewMode && (
-                        <Form.Item className="form-footer" wrapperCol={{ span: 16, offset: 4 }}>
-                            <Button htmlType="submit" type="primary" disabled={pending}>
+                        <Form.Item className="form-footer"  wrapperCol={{ span: 16, offset: 4 }}>
+                            <Button 
+                                htmlType="submit" 
+                                type="primary" 
+                                disabled={pending}
+                                onClick={() => {
+                                    setDepartment(form.getFieldsValue())
+                                    console.log("update button, fields:", department)
+                                    updateDepartment()
+                                    setViewMode(true)
+                                }}
+                            >
                                 {pending ? 'Updating...' : 'Update'}
                             </Button>
                             <Button
