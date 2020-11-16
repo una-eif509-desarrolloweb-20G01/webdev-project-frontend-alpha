@@ -49,6 +49,11 @@ const EditDepartment = props => {
             })
             .catch(e => {
                 console.log(e);
+                openNotification(
+                    "Update Unsccessful!",
+                    "error",
+                    "The Department was not updated successfully!"
+                );
             });
     };
 

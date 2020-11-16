@@ -8,7 +8,7 @@ import ReactToPrint from "react-to-print";
 const EditTimeSheet = props => {
     const initialTimeSheetState = {
         id_time: null,
-        timesheet_date: "2020-01-01",
+        timesheet_date: "1970-01-01",
         monday: 0,
         tuesday: 0,
         wednesday: 0,
@@ -17,7 +17,7 @@ const EditTimeSheet = props => {
         saturday: 0,
         sunday: 0,
         pay: 0,
-        id_user: null ,
+        id_user: null,
         approved: false,
         payed: false,
         id_department: null
@@ -26,6 +26,68 @@ const EditTimeSheet = props => {
     const [currentTimeSheet, setcurrentTimeSheet] = useState(initialTimeSheetState);
     const [viewMode, setViewMode] = useState(true)
     const [pending, setPending] = useState(false)
+    const [timesheet, setTimeSheet] = useState(initialTimeSheetState);
+    const [form] = Form.useForm();
+    useEffect(() => {
+        getTimeSheet(props.match.params.id);
+    }, [props.match.params.id]);
+
+    const getTimeSheet = id => {
+        TimeSheetService.get(id)
+            .then(response => {
+                setcurrentTimeSheet(response.data);
+                console.log(response.data);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    };
+
+    const updateTimeSheet = () => {
+        var data = {
+            id_time: timesheet.id_time,
+            timesheet_date:timesheet.timesheet_date,
+            monday: timesheet.monday,
+            tuesday: timesheet.tuesday,
+            wednesday: timesheet.wednesday,
+            thursday: timesheet.thursday,
+            friday: timesheet.friday,
+            saturday: timesheet.saturday,
+            sunday: timesheet.sunday,
+            pay: timesheet.pay,
+            id_user: timesheet.id_user,
+            approved: timesheet.approved,
+            payed: timesheet.payed,
+            id_department: timesheet.id_department 
+        };
+        // console.log("Data:", data);
+        TimeSheetService.update(data)
+            .then(response => {
+                console.log(response.data);
+                openNotification(
+                    "Update Successful!",
+                    "success",
+                    "The TimeSheet was updated successfully!"
+                );
+            })
+            .catch(e => {
+                console.log(e);
+                openNotification(
+                    "Update Unsccessful!",
+                    "error",
+                    "The TimeSheet was not updated successfully!"
+                );
+            });
+    };
+
+    const openNotification = (msg, typ, desc) => {
+        notification.open({
+            message: msg,
+            type: typ,
+            description: desc
+        });
+    };
+
     const handleFinish = useCallback(values => {
         console.log('Submit: ', values)
         setPending(true)
@@ -39,48 +101,12 @@ const EditTimeSheet = props => {
             })
         }, 1500)
     })
-    const [message, setMessage] = useState("");
 
-    const [error, setError, submitted, setSubmitted] = useState(false);
-
-    const [requiredMark, setRequiredMarkType] = useState('optional');
-
-    const layout = {
-        labelCol: {
-            span: 2,
-        },
-        wrapperCol: {
-            span: 3,
-        },
+    const handleInputChange = event => {
+        let { name, value } = event.target;
+        setTimeSheet({ ...timesheet, [name]: value });
+        setTimeSheet(form.getFieldsValue())
     };
-
-    const tailLayout = {
-        wrapperCol: {
-            offset: 2,
-            span: 8,
-        },
-    };
-    const getTimeSheet = id => {
-        TimeSheetService.get(id)
-            .then(response => {
-                setcurrentTimeSheet(response.data);
-                console.log(response.data);
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    };
-
-
-    const [form] = Form.useForm();
-    useEffect(() => {
-        getTimeSheet(props.match.params.id);
-    }, [props.match.params.id]);
-
-    // const handleInputChange = event => {
-    //     const { email, value } = event.target;
-    //     setcurrentTimeSheet({ ...currentTimeSheet, [email]: value });
-    // };
 
     const getMeta = () => {
         const meta = {
@@ -108,44 +134,6 @@ const EditTimeSheet = props => {
         return meta
     };
 
-
-    const onReset = () => {
-        form.resetFields();
-    };
-
-    const openNotification = (msg, typ, desc) => {
-        notification.open({
-            message: msg,
-            type: typ,
-            description: desc
-        });
-    };
-
-    const updateTimeSheet = () => {
-        TimeSheetService.update(currentTimeSheet)
-            .then(response => {
-                console.log(response.data);
-                openNotification(
-                    "Update Successful!",
-                    "success",
-                    "The TimeSheet was updated successfully!"
-                );
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    };
-
-    const deleteTimeSheet = () => {
-        TimeSheetService.remove(currentTimeSheet.id_time)
-            .then(response => {
-                console.log(response.data);
-
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    };
     const componentRef = useRef();
     return (
         <div>
@@ -159,7 +147,7 @@ const EditTimeSheet = props => {
                 content={() => componentRef.current}
             />
             <div ref={componentRef}>
-                <Form layout="horizontal" form={form} onFinish={handleFinish} style={{ width: '800px' }}>
+                <Form layout="horizontal" form={form} onChange={handleInputChange} onFinish={handleFinish} style={{ width: '800px' }}>
                     <h1 style={{ height: '40px', fontSize: '16px', marginTop: '50px', color: '#888' }}>
                         TimeSheet Information
                         {viewMode && (
@@ -168,7 +156,7 @@ const EditTimeSheet = props => {
                             </Button>
                         )}
                     </h1>
-                    <FormBuilder form={form} getMeta={getMeta} viewMode={viewMode} />
+                    <FormBuilder form={form} getMeta={getMeta} onChange={handleInputChange} viewMode={viewMode} />
                     {!viewMode && (
                         <Form.Item className="form-footer" wrapperCol={{ span: 16, offset: 4 }}>
                             <Button
@@ -176,6 +164,8 @@ const EditTimeSheet = props => {
                                 type="primary"
                                 disabled={pending}
                                 onClick={() => {
+                                    setTimeSheet(form.getFieldsValue())
+                                    console.log("update button, fields:", timesheet)
                                     updateTimeSheet()
                                     setViewMode(true)
                                 }}
