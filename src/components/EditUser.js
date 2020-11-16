@@ -1,21 +1,19 @@
 import React, {useState, useEffect, useCallback, useRef } from "react";
 import Select, {Form, Input, Button, Alert, Modal} from 'antd';
 import FormBuilder from "antd-form-builder";
-
 import UserService from "../services/user.service";
 import DepartmentService from "../services/department.service";
-
-
 import ReactToPrint from "react-to-print";
 import {Link} from "react-router-dom";
 
 const EditUser = props => {
     const initialUserState = {
         id_user: null,
-        email: "",
         firstname : "",
         lastname: "",
-        username: ""
+        username: "",
+        password: "",
+        email: ""
     };
     const initialDepartmentListState = [
         {

@@ -182,9 +182,8 @@ const TimeSheet = (props) => {
                 <div ref={componentRef} >
                     <Table rowKey={timesheet => timesheetList.id_time} columns={columns} dataSource={timesheetList}/>
                     {error ? (
-                        <Alert message="Error in the system. Try again later." type="error" showIcon closable/>
+                        <Alert message="Error, you must login first." type="error" showIcon closable/>
                     ) : null}
-
                 </div>
             </div>
     )

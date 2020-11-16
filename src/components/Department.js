@@ -136,6 +136,9 @@ const Department = (props) => {
                 />
                 <div ref={componentRef} >
                     <Table rowKey={user => departmentList.id_user } columns={columns} dataSource={departmentList} size="small"/>
+                    {error ? (
+                        <Alert message="Error, you must login first." type="error" showIcon closable/>
+                    ) : null}
                 </div>
             </div>
         </div>
