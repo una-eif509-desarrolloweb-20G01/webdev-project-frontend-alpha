@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import TimeSheetService from "../services/timesheet.service";
-import {Form, Input, Button, Alert} from 'antd';
+import {Form, Input, Button, Alert, notification} from 'antd';
 import {Link} from "react-router-dom";
 import {  } from '@ant-design/icons';
 
@@ -40,9 +40,9 @@ const AddTimeSheet = (props) => {
     };
     const [form] = Form.useForm();
     const [timesheet, setTimeSheet] = useState(initialTimeSheetState);
-    const [error, setError, submitted, setSubmitted] = useState(false);
+    const [error, setError] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
 
- 
 
     const handleInputChange = event => {
         let { name, value } = event.target;
@@ -82,26 +82,38 @@ const AddTimeSheet = (props) => {
                     saturday: response.data.saturday,
                     sunday: response.data.sunday,
                     pay: response.data.pay,
-                    id_user: response.data.id_user,
+                    id_user: { id_user: response.data.id_user },
                     approved: response.data.approved,
                     payed: response.data.payed,
-                    id_department: response.data.id_department
+                    id_department: { id_department: response.data.id_department}
                 });
                 setSubmitted(true);
+                openNotification(
+                    "Create Successful!",
+                    "success",
+                    "The Department was created successfully!"
+                );
                 console.log(response.data);
             })
             .catch(err => {
                 console.log(err);
+                openNotification(
+                    "Create Unsuccessful!",
+                    "error",
+                    "The TimeSheet was not created successfully!"
+                );
                 setError(err)
 
             });
     };
 
-    const newTimeSheet = () => {
-        setTimeSheet(initialTimeSheetState);
-        setSubmitted(false);
+    const openNotification = (msg, typ, desc) => {
+        notification.open({
+            message: msg,
+            type: typ,
+            description: desc
+        });
     };
-    /** General Methods **/
 
     const onFinish = data => {
         console.log(timesheet);
