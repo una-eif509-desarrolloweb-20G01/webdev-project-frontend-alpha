@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback, useRef} from "react";
 import TimeSheetService from "../services/timesheet.service";
-import {Form, Input, Button, Alert, Modal} from 'antd';
+import {Form, Input, Button, Alert, Modal, notification} from 'antd';
 import FormBuilder from "antd-form-builder";
 import {Link} from "react-router-dom";
 import ReactToPrint from "react-to-print";
@@ -113,11 +113,23 @@ const EditTimeSheet = props => {
         form.resetFields();
     };
 
+    const openNotification = (msg, typ, desc) => {
+        notification.open({
+            message: msg,
+            type: typ,
+            description: desc
+        });
+    };
+
     const updateTimeSheet = () => {
-        TimeSheetService.update(currentTimeSheet.id_time, currentTimeSheet)
+        TimeSheetService.update(currentTimeSheet)
             .then(response => {
                 console.log(response.data);
-                setMessage("The TimeSheet was updated successfully!");
+                openNotification(
+                    "Update Successful!",
+                    "success",
+                    "The TimeSheet was updated successfully!"
+                );
             })
             .catch(e => {
                 console.log(e);
@@ -159,7 +171,15 @@ const EditTimeSheet = props => {
                     <FormBuilder form={form} getMeta={getMeta} viewMode={viewMode} />
                     {!viewMode && (
                         <Form.Item className="form-footer" wrapperCol={{ span: 16, offset: 4 }}>
-                            <Button htmlType="submit" type="primary" disabled={pending}>
+                            <Button
+                                htmlType="submit"
+                                type="primary"
+                                disabled={pending}
+                                onClick={() => {
+                                    updateTimeSheet()
+                                    setViewMode(true)
+                                }}
+                            >
                                 {pending ? 'Updating...' : 'Update'}
                             </Button>
                             <Button

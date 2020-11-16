@@ -63,10 +63,10 @@ const AddTimeSheet = (props) => {
             saturday: timesheet.saturday,
             sunday: timesheet.sunday,
             pay: timesheet.pay,
-            id_user: timesheet.id_user,
+            id_user: { id_user: timesheet.id_user },
             approved: timesheet.approved,
             payed: timesheet.payed,
-            id_department: timesheet.id_department
+            id_department: { id_department: timesheet.id_department }
         };
 
         TimeSheetService.create(data)

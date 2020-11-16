@@ -14,7 +14,7 @@ const create = data => {
 };
 
 const update = (data) => {
-    return http.put(`/timesheets/`, data, { headers: authHeader() });
+    return http.put("/timesheets", data, { headers: authHeader() });
 };
 
 const remove = id => {

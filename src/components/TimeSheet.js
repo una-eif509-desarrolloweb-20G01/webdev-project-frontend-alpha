@@ -20,10 +20,10 @@ const initialTimeSheetListState = [
         "saturday": 0,
         "sunday": 0,
         "pay": 0,
-        "id_user": 0 ,
+        "id_user": null ,
         "approved": false,
         "payed": false,
-        "id_department": ""
+        "id_department": null
     }
 ];
 
@@ -148,7 +148,7 @@ const TimeSheet = (props) => {
         },
         {
             title: 'User',
-            render: (timesheet) => timesheet.id_user.id_user
+            render: (timesheet) => timesheet.id_user
         },
         {
             title: 'Approved',
@@ -160,7 +160,7 @@ const TimeSheet = (props) => {
         },
         {
             title: 'Department',
-            render: (timesheet) => timesheet.id_department.id_department
+            render: (timesheet) => timesheet.id_department
         },
         {
             title: 'Edit',
