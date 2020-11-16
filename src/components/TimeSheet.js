@@ -19,10 +19,10 @@ const initialTimeSheetListState = [
         "saturday": 0,
         "sunday": 0,
         "pay": 0,
-        "id_user": null ,
+        "id_user": { id_user: null },
         "approved": false,
         "payed": false,
-        "id_department": null
+        "id_department": { id_department: null }
     }
 ];
 
@@ -50,7 +50,7 @@ const TimeSheet = (props) => {
         TimeSheetService.getAll()
             .then(response => {
                 setTimeSheetList(response.data);
-                console.log(response.data);
+                console.log("TimeSheets: ", response.data);
             })
             .catch(err => {
                 console.log(err);
@@ -137,7 +137,7 @@ const TimeSheet = (props) => {
         },
         {
             title: 'User',
-            render: (timesheet) => timesheet.id_user
+            render: (timesheet) => timesheet.id_user.id_user
         },
         {
             title: 'Approved',
@@ -149,7 +149,7 @@ const TimeSheet = (props) => {
         },
         {
             title: 'Department',
-            render: (timesheet) => timesheet.id_department
+            render: (timesheet) => timesheet.id_department.id_department
         },
         {
             title: 'Edit',
