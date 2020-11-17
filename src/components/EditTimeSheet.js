@@ -74,7 +74,7 @@ const EditTimeSheet = props => {
             .catch(e => {
                 console.log(e);
                 openNotification(
-                    "Update Unsccessful!",
+                    "Update Unsuccessful!",
                     "error",
                     "The TimeSheet was not updated successfully!"
                 );
