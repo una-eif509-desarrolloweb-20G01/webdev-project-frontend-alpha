@@ -170,6 +170,7 @@ const User = (props) => {
         <div className="list row">
         <div className="col-md-6">
             <h4>User List</h4>
+            <p>Generates a list of the Users and create new users.</p>
             <Link to={"/add_user"}>
                 <Button type="primary" htmlType="button" icon={<PlusCircleTwoTone />}>
                     Add User

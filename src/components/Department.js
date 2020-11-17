@@ -125,6 +125,7 @@ const Department = (props) => {
         <div className="list row">
             <div className="col-md-6">
             <h4>Department List</h4>
+            <p>Generates a list of the Deparments and create new deparments.</p>
                 <Link to={"/add_department"}>
                     <Button type="primary" htmlType="button" icon={<PlusCircleTwoTone />}>
                         Add

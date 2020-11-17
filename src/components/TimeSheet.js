@@ -170,7 +170,7 @@ const TimeSheet = (props) => {
 
             <div className="col-md-8">
                 <h4>TimeSheet List</h4>
-
+                <p>Generates a list of the TimeSheet and create new TimeSheets.</p>
                 <Link to={"/add_timesheet"}>
                     <Button type="primary" htmlType="button" icon={<PlusCircleTwoTone />}> Add TimeSheet </Button>
                 </Link>
