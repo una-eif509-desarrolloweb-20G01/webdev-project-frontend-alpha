@@ -44,7 +44,7 @@ function App() {
         <Layout className="layout">
         <Header>
             <div className="logo"/>
-            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['0']}>
+            <Menu theme="dark" mode="horizontal" >
                 <Menu.Item key="0">
                     <Link to={"/"}>
                         Home
@@ -66,19 +66,19 @@ function App() {
                     </a>
                 </Menu.Item>
                 <Menu.Item key="4">
-                    <a href="/Department" className="nav-link"  >
+                    <Link to={"/department"}>
                     Department
-                    </a>
+                    </Link>
                 </Menu.Item>
                 <Menu.Item key="5">
-                    <a href="/User" className="nav-link"  >
+                    <Link to={"/user"}>
                     User
-                    </a>
+                    </Link>
                 </Menu.Item>
                 <Menu.Item key="6">
-                    <a href="/TimeSheet" className="nav-link"  >
+                    <Link to={"/timesheet"}>
                         TimeSheet
-                    </a>
+                    </Link>
                 </Menu.Item>
             </Menu>
         </Header>
